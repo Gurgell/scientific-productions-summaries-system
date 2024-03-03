@@ -1,4 +1,4 @@
-# Scientifc Production System
+# Scientific Production System
 
 Projeto em grupo feito para a disciplina de Desenvolvimento de Sistemas I da instituição Faculdade Professor Miguel Ângelo da Silva Santos (FeMASS) dirigida pelo professor Isac Mendes Lacerda.
 <br><br>O objetivo é fazer uma aplicação web capaz de manejar informações provenientes da [Plataforma Lattes](https://lattes.cnpq.br/), tais como Institutos, Pesquisadores e Produções Acadêmicas. Esses dados poderão ser importados por meio de arquivos XML's e, além disso, será possível criar grafos para representar a conexão entre as entidades envolvidas. 
