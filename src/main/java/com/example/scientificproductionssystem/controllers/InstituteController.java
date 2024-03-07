@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin    //Notação para que seja possível fazer requisições em um frontend situado na mesma máquina do backend
 @RequestMapping("/institute")
 public class InstituteController {
 
