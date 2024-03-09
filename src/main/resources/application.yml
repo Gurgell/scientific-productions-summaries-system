@@ -5,7 +5,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/scientific-productions-summaries-system?useTimeZone=true&serverTimeZone=UTC
     username: root
-    password: admin
+    password: root
   jpa:
     hibernate:
       ddl-auto: none
