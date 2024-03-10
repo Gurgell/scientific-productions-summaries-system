@@ -17,6 +17,7 @@ public class Researcher implements Serializable {
     @Column(nullable = false)
     private String email;
 
+    @JoinColumn(name = "institute_id")
     @ManyToOne
     private Institute institute;
 
@@ -50,6 +51,14 @@ public class Researcher implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Institute getInstitute() {
+        return institute;
+    }
+
+    public void setInstitute(Institute institute) {
+        this.institute = institute;
     }
 
     @Override
