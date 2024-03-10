@@ -1,9 +1,11 @@
 package com.example.scientificproductionssystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +20,10 @@ public class Institute implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String acronym;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "institute")
+    private List<Researcher> researchers;
 
     public Institute(){}
 
@@ -51,16 +57,24 @@ public class Institute implements Serializable {
         this.acronym = acronym;
     }
 
+    public List<Researcher> getResearchers() {
+        return researchers;
+    }
+
+    public void setResearchers(List<Researcher> researchers) {
+        this.researchers = researchers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Institute institute = (Institute) o;
-        return Objects.equals(id, institute.id) && Objects.equals(name, institute.name) && Objects.equals(acronym, institute.acronym);
+        return Objects.equals(id, institute.id) && Objects.equals(name, institute.name) && Objects.equals(acronym, institute.acronym) && Objects.equals(researchers, institute.researchers);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, acronym);
+        return Objects.hash(id, name, acronym, researchers);
     }
 }

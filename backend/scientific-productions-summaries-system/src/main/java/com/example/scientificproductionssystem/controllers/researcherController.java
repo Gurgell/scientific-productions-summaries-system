@@ -1,8 +1,7 @@
 package com.example.scientificproductionssystem.controllers;
 
-import com.example.scientificproductionssystem.model.Institute;
-import com.example.scientificproductionssystem.model.Researcher;
-import com.example.scientificproductionssystem.services.InstituteService;
+import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
+import com.example.scientificproductionssystem.dto.researcher.ResearcherUpdateDTO;
 import com.example.scientificproductionssystem.services.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,18 +18,18 @@ public class researcherController {
     ResearcherService service; /*Cria uma instancia de ResearcherService e atribui ao service*/
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)/*método irá responder a solicitações GET e produzirá uma resposta no formato JSON*/
-    public ResponseEntity<List<Researcher>> findAll(){
+    public ResponseEntity<List<ResearcherDetailsDTO>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Researcher findById(@PathVariable(value = "id") Long id){
+    public ResearcherDetailsDTO findById(@PathVariable(value = "id") Long id){
         return service.findById(id);
     }
 
-    @PostMapping(value = "/{id_institute}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Researcher create(@RequestBody Researcher researcher, @PathVariable Long id_institute){
-        return service.create(researcher, id_institute);
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResearcherDetailsDTO create(@RequestBody ResearcherUpdateDTO researcher){
+        return service.create(researcher);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -40,8 +39,8 @@ public class researcherController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Researcher update (@RequestBody Researcher researcher) {
-        return service.update(researcher);
+    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResearcherDetailsDTO update (@RequestBody ResearcherUpdateDTO researcher, @PathVariable Long id) {
+        return service.update(researcher, id);
     }
 }

@@ -1,7 +1,10 @@
 package com.example.scientificproductionssystem.services;
 
+import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
+import com.example.scientificproductionssystem.dto.researcher.ResearcherUpdateDTO;
 import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullException;
 import com.example.scientificproductionssystem.exceptions.ResourceNotFoundException;
+import com.example.scientificproductionssystem.mapper.ResearcherMapper;
 import com.example.scientificproductionssystem.model.Institute;
 import com.example.scientificproductionssystem.model.Researcher;
 import com.example.scientificproductionssystem.repositories.InstituteRepository;
@@ -10,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ResearcherService {
@@ -21,33 +23,54 @@ public class ResearcherService {
     @Autowired
     InstituteRepository instituteRepository;
 
-    public Researcher findById(Long id){
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+    @Autowired
+    ResearcherMapper researcherMapper;
+
+    public ResearcherDetailsDTO findById(Long id){
+        Researcher researcher = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+        return researcherMapper.toResearcherDetailsDTO(researcher);
     }
 
-    public Researcher create(Researcher researcher, Long id_institute) {
-        Institute institute = instituteRepository.findById(id_institute).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
-        if (researcher == null) throw new RequiredObjectIsNullException();
+    public ResearcherDetailsDTO create(ResearcherUpdateDTO researcherUpdateDTO) {
+        if (researcherUpdateDTO == null) throw new RequiredObjectIsNullException();
+        Institute institute = instituteRepository.findById(researcherUpdateDTO.getInstitute_id()).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
 
+        Researcher researcher = researcherMapper.fromResearcherUpdateDTOToResearcher(researcherUpdateDTO);
         researcher.setInstitute(institute);
-        return repository.save(researcher);
+
+        repository.save(researcher);
+
+        return researcherMapper.toResearcherDetailsDTO(researcher);
     }
 
     public void delete(Long id){
 
-        Researcher researcher = this.findById(id);
+        ResearcherDetailsDTO researcherDetailsDTO = this.findById(id);
+
+        Researcher researcher = researcherMapper.fromResearcherDetailsDTOToResearcher(researcherDetailsDTO);
 
         repository.delete(researcher);
 
     }
 
-    public List<Researcher> findAll() {
-        return repository.findAll();
+    public List<ResearcherDetailsDTO> findAll() {
+        List<Researcher> researchers = repository.findAll();
+        if (researchers.isEmpty()) throw new ResourceNotFoundException("No researchers found!");
+
+        return researcherMapper.fromListResearchersToResearchersDetailsDTO(researchers);
     }
 
-    public Researcher update(Researcher researcher) {
-        Researcher entity = this.findById(researcher.getId());
+    public ResearcherDetailsDTO update(ResearcherUpdateDTO researcherUpdateDTO, Long id) {
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this researcher ID!"));
+        Institute institute = instituteRepository.findById(researcherUpdateDTO.getInstitute_id()).orElseThrow(() -> new ResourceNotFoundException("No records found for this institute ID!"));
 
-        return repository.save(researcher);
+        Researcher researcher = researcherMapper.fromResearcherUpdateDTOToResearcher(researcherUpdateDTO);
+        researcher.setId(id);
+        researcher.setInstitute(institute);
+
+        repository.save(researcher);
+
+        return researcherMapper.toResearcherDetailsDTO(researcher);
     }
 }

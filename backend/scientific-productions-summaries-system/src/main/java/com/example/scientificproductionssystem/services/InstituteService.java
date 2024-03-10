@@ -4,8 +4,10 @@ import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullEx
 import com.example.scientificproductionssystem.exceptions.ResourceNotFoundException;
 import com.example.scientificproductionssystem.model.Institute;
 import com.example.scientificproductionssystem.repositories.InstituteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
