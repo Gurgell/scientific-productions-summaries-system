@@ -15,11 +15,11 @@ public class Researcher implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+
     @NotBlank
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     @NotBlank
     private String email;
 

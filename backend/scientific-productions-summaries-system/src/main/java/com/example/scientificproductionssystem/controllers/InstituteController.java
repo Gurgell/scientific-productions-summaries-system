@@ -1,6 +1,7 @@
 package com.example.scientificproductionssystem.controllers;
 
-import com.example.scientificproductionssystem.model.Institute;
+import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
+import com.example.scientificproductionssystem.dto.institute.InstituteUpdateDTO;
 import com.example.scientificproductionssystem.services.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,18 +19,18 @@ public class InstituteController {
     InstituteService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Institute>> findAll(){
+    public ResponseEntity<List<InstituteDetailsDTO>> findAll(){
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    public Institute findById(@PathVariable(value = "id") Long id){
+    public InstituteDetailsDTO findById(@PathVariable(value = "id") Long id){
         return service.findById(id);
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Institute create(@RequestBody Institute institute){
-        return service.create(institute);
+    public InstituteDetailsDTO create(@RequestBody InstituteUpdateDTO instituteUpdateDTO){
+        return service.create(instituteUpdateDTO);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -39,8 +40,8 @@ public class InstituteController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Institute update (@RequestBody Institute institute) {
-        return service.update(institute);
+    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public InstituteDetailsDTO update (@RequestBody InstituteUpdateDTO instituteUpdateDTO, @PathVariable Long id) {
+        return service.update(instituteUpdateDTO, id);
     }
 }

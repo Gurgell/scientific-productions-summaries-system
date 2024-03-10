@@ -42,8 +42,11 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     public final ResponseEntity<ExceptionResponse> DataIntegrityViolationException(Exception ex, WebRequest request){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 
-        if (ex.getCause() != null && ex.getCause().getMessage().contains("researcher.unique_name")) {
-            exceptionResponse = new ExceptionResponse(new Date(), "This researcher name already exists. Please chose another one!", request.getDescription(false));
+        if (ex.getCause() != null && ex.getCause().getMessage().contains("researcher.unique_email")) {
+            exceptionResponse = new ExceptionResponse(new Date(), "This email is already in use by another researcher. Please provide another email!", request.getDescription(false));
+        }
+        else if (ex.getCause() != null && ex.getCause().getMessage().contains("institute.unique_name")) {
+            exceptionResponse = new ExceptionResponse(new Date(), "This institute name already exists. Please provide another name!", request.getDescription(false));
         }
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);

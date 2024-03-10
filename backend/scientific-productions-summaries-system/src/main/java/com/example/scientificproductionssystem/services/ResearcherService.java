@@ -45,13 +45,10 @@ public class ResearcherService {
     }
 
     public void delete(Long id){
-
         ResearcherDetailsDTO researcherDetailsDTO = this.findById(id);
 
         Researcher researcher = researcherMapper.fromResearcherDetailsDTOToResearcher(researcherDetailsDTO);
-
         repository.delete(researcher);
-
     }
 
     public List<ResearcherDetailsDTO> findAll() {

@@ -1,8 +1,12 @@
 package com.example.scientificproductionssystem.services;
 
+import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
+import com.example.scientificproductionssystem.dto.institute.InstituteUpdateDTO;
 import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullException;
 import com.example.scientificproductionssystem.exceptions.ResourceNotFoundException;
+import com.example.scientificproductionssystem.mapper.InstituteMapper;
 import com.example.scientificproductionssystem.model.Institute;
+import com.example.scientificproductionssystem.model.Researcher;
 import com.example.scientificproductionssystem.repositories.InstituteRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,31 +21,47 @@ public class InstituteService {
     @Autowired
     InstituteRepository repository;
 
-    public Institute findById(Long id){
-        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+    @Autowired
+    InstituteMapper instituteMapper;
+
+    public InstituteDetailsDTO findById(Long id){
+        Institute institute = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
+
+        return instituteMapper.toInstituteDetailsDTO(institute);
     }
 
-    public Institute create(Institute institute) {
-        if (institute == null) throw new RequiredObjectIsNullException();
+    public InstituteDetailsDTO create(InstituteUpdateDTO instituteUpdateDTO) {
+        if (instituteUpdateDTO == null) throw new RequiredObjectIsNullException();
 
-        return repository.save(institute);
+        Institute institute = instituteMapper.fromInstituteUpdateDTOToInstitute(instituteUpdateDTO);
+
+        repository.save(institute);
+
+        return instituteMapper.toInstituteDetailsDTO(institute);
     }
 
     public void delete(Long id){
+        InstituteDetailsDTO instituteDetailsDTO = this.findById(id);
 
-        Institute entity = this.findById(id);
+        Institute institute = instituteMapper.fromInstituteDetailsDTOToInstitute(instituteDetailsDTO);
 
-        repository.delete(entity);
-
+        repository.delete(institute);
     }
 
-    public List<Institute> findAll() {
-        return repository.findAll();
+    public List<InstituteDetailsDTO> findAll() {
+        List<Institute> institutes = repository.findAll();
+        if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
+
+        return instituteMapper.fromListInstitutesToInstitutesDetailsDTO(institutes);
     }
 
-    public Institute update(Institute institute) {
-        Institute entity = this.findById(institute.getId());
+    public InstituteDetailsDTO update(InstituteUpdateDTO instituteUpdateDTO, Long id) {
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this institute ID!"));
 
-        return repository.save(institute);
+        Institute institute = instituteMapper.fromInstituteUpdateDTOToInstitute(instituteUpdateDTO);
+        institute.setId(id);
+        repository.save(institute);
+
+        return instituteMapper.toInstituteDetailsDTO(institute);
     }
 }
