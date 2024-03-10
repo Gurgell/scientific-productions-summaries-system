@@ -28,9 +28,9 @@ public class researcherController {
         return service.findById(id);
     }
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Researcher create(@RequestBody Researcher researcher){
-        return service.create(researcher);
+    @PostMapping(value = "/{id_institute}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public Researcher create(@RequestBody Researcher researcher, @PathVariable Long id_institute){
+        return service.create(researcher, id_institute);
     }
 
     @DeleteMapping(value = "/{id}")
