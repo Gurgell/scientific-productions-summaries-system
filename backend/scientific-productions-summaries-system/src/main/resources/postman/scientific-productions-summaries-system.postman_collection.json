@@ -1,0 +1,308 @@
+{
+	"info": {
+		"_postman_id": "c43bf9e0-bce0-43cf-84aa-09f6e415f784",
+		"name": "scientific-productions-summaries-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30516674"
+	},
+	"item": [
+		{
+			"name": "institute",
+			"item": [
+				{
+					"name": "Finds all institutes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/institute",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute"
+							]
+						},
+						"description": "Finds all people"
+					},
+					"response": []
+				},
+				{
+					"name": "Finds institute by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/institute/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute",
+								"2"
+							]
+						},
+						"description": "Finds all people"
+					},
+					"response": []
+				},
+				{
+					"name": "Updates a institute",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Instituto Nacional de Tecnologia da Informação\",\n  \"acronym\": \"ITI\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/institute/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute",
+								"1"
+							]
+						},
+						"description": "Updates a person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				},
+				{
+					"name": "Adds a new institute",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"United Nations Educational, Scientific and Cultural Organization\",\n  \"acronym\": \"UNESCO\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/institute",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute"
+							]
+						},
+						"description": "Adds a new person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes a institute by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/institute/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute",
+								"9"
+							]
+						},
+						"description": "Deletes a person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "researcher",
+			"item": [
+				{
+					"name": "Finds all researchers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/researcher",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher"
+							]
+						},
+						"description": "Finds all people"
+					},
+					"response": []
+				},
+				{
+					"name": "Finds researcher by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/researcher/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher",
+								"7"
+							]
+						},
+						"description": "Finds all people"
+					},
+					"response": []
+				},
+				{
+					"name": "Updates a researcher",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Juryu\",\n  \"email\": \"Juryu@gmail.com\",\n  \"institute_id\": \"6\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/researcher/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher",
+								"9"
+							]
+						},
+						"description": "Updates a person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				},
+				{
+					"name": "Adds a new researcher",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Daniel\",\n  \"email\": \"Dani@outlook\",\n  \"institute_id\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"headerFamily": "json",
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/researcher",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher"
+							]
+						},
+						"description": "Adds a new person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				},
+				{
+					"name": "Deletes a researcher by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/researcher/11",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher",
+								"11"
+							]
+						},
+						"description": "Deletes a person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

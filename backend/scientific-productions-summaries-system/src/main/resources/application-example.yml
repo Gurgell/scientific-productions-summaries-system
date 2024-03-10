@@ -1,0 +1,16 @@
+# server:
+#   port: 8080
+
+# spring:
+#   datasource:
+#     driver-class-name: com.mysql.cj.jdbc.Driver
+#     url: jdbc:mysql://localhost:3306/scientific-productions-summaries-system?useTimeZone=true&serverTimeZone=UTC
+#     username: #Your database username
+#     password: #Your database password
+#   jpa:
+#     hibernate:
+#       ddl-auto: validate
+#     properties:
+#       show-sql: false
+#     open-in-view: false
+
