@@ -1,6 +1,7 @@
 package com.example.scientificproductionssystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,8 +13,10 @@ public class Institute implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    @NotBlank
     private String name;
     @Column(nullable = false)
+    @NotBlank
     private String acronym;
 
     public Institute(){}

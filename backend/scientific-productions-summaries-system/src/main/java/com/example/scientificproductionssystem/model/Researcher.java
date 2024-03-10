@@ -1,6 +1,10 @@
 package com.example.scientificproductionssystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -12,21 +16,25 @@ public class Researcher implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
+    @NotBlank
     private String name;
 
     @Column(nullable = false)
+    @NotBlank
     private String email;
 
-    @JoinColumn(name = "institute_id")
+    @JoinColumn(name = "institute_id", nullable = false)
     @ManyToOne
+    @NotNull
     private Institute institute;
 
     public Researcher(){}
 
-    public Researcher(Long id, String name, String email) {
+    public Researcher(Long id, String name, String email, Institute institute) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.institute = institute;
     }
 
     public Long getId() {

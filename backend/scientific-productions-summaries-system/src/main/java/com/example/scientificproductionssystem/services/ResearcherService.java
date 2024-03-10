@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ResearcherService {
@@ -17,13 +18,18 @@ public class ResearcherService {
     @Autowired
     ResearcherRepository repository;
 
+    @Autowired
+    InstituteRepository instituteRepository;
+
     public Researcher findById(Long id){
         return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
     }
 
-    public Researcher create(Researcher researcher) {
+    public Researcher create(Researcher researcher, Long id_institute) {
+        Institute institute = instituteRepository.findById(id_institute).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
         if (researcher == null) throw new RequiredObjectIsNullException();
 
+        researcher.setInstitute(institute);
         return repository.save(researcher);
     }
 
