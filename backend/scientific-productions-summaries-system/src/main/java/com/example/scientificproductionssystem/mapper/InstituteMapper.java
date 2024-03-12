@@ -5,6 +5,7 @@ import com.example.scientificproductionssystem.dto.institute.InstituteUpdateDTO;
 import com.example.scientificproductionssystem.model.Institute;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -33,6 +34,15 @@ public class InstituteMapper {
     }
 
     public List<InstituteDetailsDTO> fromListInstitutesToInstitutesDetailsDTO(List<Institute> institutes){
+        List<InstituteDetailsDTO> instituteDetailsDTO = new ArrayList<>();
+        for (Institute institute : institutes) {
+            instituteDetailsDTO.add(this.toInstituteDetailsDTO(institute));
+        }
+
+        return instituteDetailsDTO;
+    }
+
+    public List<InstituteDetailsDTO> fromPageInstitutesToInstitutesDetailsDTO(Page<Institute> institutes){
         List<InstituteDetailsDTO> instituteDetailsDTO = new ArrayList<>();
         for (Institute institute : institutes) {
             instituteDetailsDTO.add(this.toInstituteDetailsDTO(institute));
