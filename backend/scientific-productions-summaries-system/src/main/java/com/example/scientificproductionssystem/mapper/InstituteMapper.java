@@ -42,12 +42,7 @@ public class InstituteMapper {
         return instituteDetailsDTO;
     }
 
-    public List<InstituteDetailsDTO> fromPageInstitutesToInstitutesDetailsDTO(Page<Institute> institutes){
-        List<InstituteDetailsDTO> instituteDetailsDTO = new ArrayList<>();
-        for (Institute institute : institutes) {
-            instituteDetailsDTO.add(this.toInstituteDetailsDTO(institute));
-        }
-
-        return instituteDetailsDTO;
+    public Page<InstituteDetailsDTO> fromPageInstitutesToInstitutesDetailsDTO(Page<Institute> institutes){
+        return institutes.map(this::toInstituteDetailsDTO);
     }
 }

@@ -2,8 +2,10 @@ package com.example.scientificproductionssystem.controllers;
 
 import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
 import com.example.scientificproductionssystem.dto.institute.InstituteUpdateDTO;
+import com.example.scientificproductionssystem.model.Institute;
 import com.example.scientificproductionssystem.services.InstituteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +27,15 @@ public class InstituteController {
     }
 
     @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<InstituteDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false,
+    public ResponseEntity<Page<InstituteDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false,
             defaultValue = "0") Integer page,
-            @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
-            @RequestParam(name = "name", required = false) Optional<String> name,
-            @RequestParam(name = "acronym", required = false) Optional<String> acronym)
+                                                                    @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
+                                                                    @RequestParam(name = "name", required = false) Optional<String> name,
+                                                                    @RequestParam(name = "acronym", required = false) Optional<String> acronym)
     {
             if(name.isPresent())
                 return ResponseEntity.ok(service.findWithParams(page, limit, "name", name.get()));
-            else if(acronym.isPresent())
+            else if (acronym.isPresent())
                 return ResponseEntity.ok(service.findWithParams(page, limit, "acronym", acronym.get()));
             else
                 return ResponseEntity.ok(service.findWithParams(page, limit));

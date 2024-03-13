@@ -60,7 +60,7 @@ public class InstituteService {
         return instituteMapper.fromListInstitutesToInstitutesDetailsDTO(institutes);
     }
 
-    public List<InstituteDetailsDTO> findWithParams(Integer page, Integer limit) {
+    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit) {
         Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
         Page<Institute> institutes = repository.findAll(pageable);
         if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
@@ -68,10 +68,10 @@ public class InstituteService {
         return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
     }
 
-    public List<InstituteDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
+    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
         PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
 
-        List<Institute> institutes;
+        Page<Institute> institutes;
         if(field.equals("name"))
             institutes = repository.findByNameContainingIgnoreCase(value, pageRequest);
         else if(field.equals("acronym"))
@@ -80,7 +80,7 @@ public class InstituteService {
 
         if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
 
-        return instituteMapper.fromListInstitutesToInstitutesDetailsDTO(institutes);
+        return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
     }
 
     public InstituteDetailsDTO update(InstituteUpdateDTO instituteUpdateDTO, Long id) {
