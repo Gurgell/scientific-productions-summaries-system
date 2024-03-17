@@ -13,7 +13,6 @@ import java.util.Objects;
 @Table(name = "researcher")
 public class Researcher implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank

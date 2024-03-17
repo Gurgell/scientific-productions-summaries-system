@@ -2,6 +2,7 @@ package com.example.scientificproductionssystem.exceptions.handler;
 import com.example.scientificproductionssystem.exceptions.ExceptionResponse;
 import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullException;
 import com.example.scientificproductionssystem.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityExistsException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +16,18 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.logging.Logger;
 
+
+
 @ControllerAdvice
 @RestController
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+
+    private static final Logger logger = Logger.getLogger(CustomizedResponseEntityExceptionHandler.class.getName());
+
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<ExceptionResponse> handleAllExceptions(Exception ex, WebRequest request){
         ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        logger.info(Arrays.toString(ex.getStackTrace()));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -48,6 +55,13 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         else if (ex.getCause() != null && ex.getCause().getMessage().contains("institute.unique_name")) {
             exceptionResponse = new ExceptionResponse(new Date(), "This institute name already exists. Please provide another name!", request.getDescription(false));
         }
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EntityExistsException.class)
+    public final ResponseEntity<ExceptionResponse> EntityExistsException(Exception ex, WebRequest request){
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription(false));
 
         return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
     }

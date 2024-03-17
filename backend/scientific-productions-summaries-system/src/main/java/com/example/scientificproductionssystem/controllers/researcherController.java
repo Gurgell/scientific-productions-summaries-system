@@ -38,9 +38,4 @@ public class researcherController {
 
         return ResponseEntity.noContent().build();
     }
-
-    @PutMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResearcherDetailsDTO update (@RequestBody ResearcherUpdateDTO researcher, @PathVariable Long id) {
-        return service.update(researcher, id);
-    }
 }

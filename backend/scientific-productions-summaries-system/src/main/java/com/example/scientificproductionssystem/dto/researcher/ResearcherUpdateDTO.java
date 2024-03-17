@@ -7,33 +7,24 @@ import java.util.Objects;
 
 public class ResearcherUpdateDTO implements Serializable {
 
-    private String name;
-
-    private String email;
+    private Long id;
 
     private Long institute_id;
 
-    public ResearcherUpdateDTO(){}
-    public ResearcherUpdateDTO(String name, String email, Long institute_id) {
-        this.name = name;
-        this.email = email;
+    public ResearcherUpdateDTO() {
+    }
+
+    public ResearcherUpdateDTO(Long id, Long institute_id) {
+        this.id = id;
         this.institute_id = institute_id;
     }
 
-    public String getName() {
-        return name;
+    public Long getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getInstitute_id() {
@@ -49,11 +40,11 @@ public class ResearcherUpdateDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResearcherUpdateDTO that = (ResearcherUpdateDTO) o;
-        return Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(institute_id, that.institute_id);
+        return Objects.equals(id, that.id) && Objects.equals(institute_id, that.institute_id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, email, institute_id);
+        return Objects.hash(id, institute_id);
     }
 }
