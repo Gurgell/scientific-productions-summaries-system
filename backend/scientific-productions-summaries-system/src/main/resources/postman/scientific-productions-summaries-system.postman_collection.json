@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "f4943072-0bbd-44a0-a834-dd49eaafcfc4",
+		"_postman_id": "c43bf9e0-bce0-43cf-84aa-09f6e415f784",
 		"name": "scientific-productions-summaries-system",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "28363821"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30516674"
 	},
 	"item": [
 		{
@@ -26,7 +26,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/institute",
+						"url": {
+							"raw": "{{baseUrl}}/institute",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute"
+							]
+						},
 						"description": "Finds all people"
 					},
 					"response": []
@@ -48,94 +56,17 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/institute/2",
+						"url": {
+							"raw": "{{baseUrl}}/institute/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute",
+								"2"
+							]
+						},
 						"description": "Finds all people"
-					},
-					"response": []
-				},
-				{
-					"name": "Finds institute with pagination",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/institute/search?page=0&limit=2",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute",
-								"search"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "limit",
-									"value": "2"
-								}
-							]
-						},
-						"description": "Paginates objects returned by a request. The parameter 'limit' defines how many objects will the pages have, and the parameter 'page' indicates which is the current page.\n\nIf 'limit' is not informed, the API will considerer it as '10'.\n\nIf 'page' is not informed, the API will considerer it as '0'."
-					},
-					"response": []
-				},
-				{
-					"name": "Finds institute with params",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/institute/search?page=1&limit=1&name=NACIONAL",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute",
-								"search"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "1"
-								},
-								{
-									"key": "limit",
-									"value": "1"
-								},
-								{
-									"key": "name",
-									"value": "NACIONAL"
-								}
-							]
-						},
-						"description": "Filter results by 'name' or by 'acronym'. Both can be used with pagination atributes, but can't be used together.\n\nExample: \"name=Institute&acronym=IN\" = wrong"
 					},
 					"response": []
 				},
@@ -154,7 +85,16 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/institute/1",
+						"url": {
+							"raw": "{{baseUrl}}/institute/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute",
+								"1"
+							]
+						},
 						"description": "Updates a person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -181,7 +121,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/institute",
+						"url": {
+							"raw": "{{baseUrl}}/institute",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute"
+							]
+						},
 						"description": "Adds a new person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -191,7 +139,16 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{baseUrl}}/institute/9",
+						"url": {
+							"raw": "{{baseUrl}}/institute/9",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"institute",
+								"9"
+							]
+						},
 						"description": "Deletes a person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -218,7 +175,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/researcher",
+						"url": {
+							"raw": "{{baseUrl}}/researcher",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher"
+							]
+						},
 						"description": "Finds all people"
 					},
 					"response": []
@@ -240,28 +205,17 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/researcher/7",
-						"description": "Finds all people"
-					},
-					"response": []
-				},
-				{
-					"name": "Updates a researcher",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Juryu\",\n  \"email\": \"Juryu@gmail.com\",\n  \"institute_id\": \"6\"\n}",
-							"options": {
-								"raw": {
-									"headerFamily": "json",
-									"language": "json"
-								}
-							}
+						"url": {
+							"raw": "{{baseUrl}}/researcher/7",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher",
+								"7"
+							]
 						},
-						"url": "{{baseUrl}}/researcher/9",
-						"description": "Updates a person by passing in a JSON or XML representation of the person!"
+						"description": "Finds all people"
 					},
 					"response": []
 				},
@@ -279,7 +233,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Daniel\",\n  \"email\": \"Dani@outlook\",\n  \"institute_id\": \"2\"\n}",
+							"raw": "{\n  \"id\": \"0023809873085852\",\n  \"institute_id\": \"2\"\n}",
 							"options": {
 								"raw": {
 									"headerFamily": "json",
@@ -287,7 +241,15 @@
 								}
 							}
 						},
-						"url": "{{baseUrl}}/researcher",
+						"url": {
+							"raw": "{{baseUrl}}/researcher",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher"
+							]
+						},
 						"description": "Adds a new person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -297,7 +259,16 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": "{{baseUrl}}/researcher/11",
+						"url": {
+							"raw": "{{baseUrl}}/researcher/11",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"researcher",
+								"11"
+							]
+						},
 						"description": "Deletes a person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
