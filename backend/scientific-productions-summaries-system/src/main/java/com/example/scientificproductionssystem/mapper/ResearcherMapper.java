@@ -1,11 +1,14 @@
 package com.example.scientificproductionssystem.mapper;
 
+import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherUpdateDTO;
+import com.example.scientificproductionssystem.model.Institute;
 import com.example.scientificproductionssystem.model.Researcher;
 import com.example.scientificproductionssystem.repositories.InstituteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -40,5 +43,9 @@ public class ResearcherMapper {
         }
 
         return researcherDetailsDTO;
+    }
+
+    public Page<ResearcherDetailsDTO> fromPageResearchersToResearchersDetailsDTO(Page<Researcher> researchers){
+        return researchers.map(this::toResearcherDetailsDTO);
     }
 }

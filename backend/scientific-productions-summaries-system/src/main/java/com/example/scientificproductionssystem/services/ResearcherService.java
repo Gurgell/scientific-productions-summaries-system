@@ -1,5 +1,6 @@
 package com.example.scientificproductionssystem.services;
 
+import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherUpdateDTO;
 import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullException;
@@ -12,7 +13,7 @@ import com.example.scientificproductionssystem.repositories.ResearcherRepository
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Example;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,6 +76,29 @@ public class ResearcherService {
         if (researchers.isEmpty()) throw new ResourceNotFoundException("No researchers found!");
 
         return researcherMapper.fromListResearchersToResearchersDetailsDTO(researchers);
+    }
+
+    public Page<ResearcherDetailsDTO> findWithParams(Integer page, Integer limit) {
+        Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
+        Page<Researcher> researchers = repository.findAll(pageable);
+        if (researchers.isEmpty()) throw new ResourceNotFoundException("No researchers found!");
+
+        return researcherMapper.fromPageResearchersToResearchersDetailsDTO(researchers);
+    }
+
+    public Page<ResearcherDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
+        PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
+
+        Page<Researcher> researchers;
+        if(field.equals("name"))
+            researchers = repository.findByNameContainingIgnoreCase(value, pageRequest);
+        else if(field.equals("email"))
+            researchers = repository.findByEmailStartingWithIgnoreCase(value, pageRequest);
+        else throw new ResourceNotFoundException("Search field wrongly informed!");
+
+        if (researchers.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
+
+        return researcherMapper.fromPageResearchersToResearchersDetailsDTO(researchers);
     }
 
 }
