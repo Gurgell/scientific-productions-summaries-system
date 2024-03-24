@@ -41,7 +41,7 @@ public class ResearcherService {
         return researcherMapper.toResearcherDetailsDTO(researcher);
     }
 
-    public ResearcherDetailsDTO create(ResearcherUpdateDTO researcherUpdateDTO) {
+    public ResearcherDetailsDTO findResearcherByCurriculumId(ResearcherUpdateDTO researcherUpdateDTO) {
         if (researcherUpdateDTO == null) throw new RequiredObjectIsNullException();
         Institute institute = instituteRepository.findById(researcherUpdateDTO.getInstitute_id()).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
         Researcher researcher = researcherMapper.fromResearcherUpdateDTOToResearcher(researcherUpdateDTO);
@@ -56,12 +56,21 @@ public class ResearcherService {
 
         researcher.setInstitute(institute);
 
-        if (repository.findById(researcher.getId()).isPresent()){
+        return researcherMapper.toResearcherDetailsDTO(researcher);
+    }
+
+    public ResearcherDetailsDTO create(ResearcherDetailsDTO researcherDetailsDTO){
+        if (researcherDetailsDTO == null) throw new RequiredObjectIsNullException();
+        instituteRepository.findById(researcherDetailsDTO.getInstitute().getId()).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
+
+        if (repository.findById(researcherDetailsDTO.getId()).isPresent()){
             throw new EntityExistsException("This researcher ID already exists!");
         }
+
+        Researcher researcher = researcherMapper.fromResearcherDetailsDTOToResearcher(researcherDetailsDTO);
         repository.save(researcher);
 
-        return researcherMapper.toResearcherDetailsDTO(researcher);
+        return researcherDetailsDTO;
     }
 
     public void delete(Long id){

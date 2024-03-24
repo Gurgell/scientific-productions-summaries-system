@@ -47,8 +47,13 @@ public class researcherController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResearcherDetailsDTO create(@RequestBody ResearcherUpdateDTO researcher){
+    public ResearcherDetailsDTO create(@RequestBody ResearcherDetailsDTO researcher){
         return service.create(researcher);
+    }
+
+    @GetMapping(value = "/curriculum", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResearcherDetailsDTO findResearcherByCurriculumId(@RequestBody ResearcherUpdateDTO researcher){
+        return service.findResearcherByCurriculumId(researcher);
     }
 
     @DeleteMapping(value = "/{id}")
