@@ -9,14 +9,17 @@ public class ResearcherUpdateDTO implements Serializable {
 
     private Long id;
 
-    private Long institute_id;
+    private String name;
+
+    private String email;
 
     public ResearcherUpdateDTO() {
     }
 
-    public ResearcherUpdateDTO(Long id, Long institute_id) {
+    public ResearcherUpdateDTO(Long id, String name, String email) {
         this.id = id;
-        this.institute_id = institute_id;
+        this.name = name;
+        this.email = email;
     }
 
     public Long getId() {
@@ -27,12 +30,20 @@ public class ResearcherUpdateDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getInstitute_id() {
-        return institute_id;
+    public String getName() {
+        return name;
     }
 
-    public void setInstitute_id(Long institute_id) {
-        this.institute_id = institute_id;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -40,11 +51,11 @@ public class ResearcherUpdateDTO implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ResearcherUpdateDTO that = (ResearcherUpdateDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(institute_id, that.institute_id);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, institute_id);
+        return Objects.hash(id, name, email);
     }
 }
