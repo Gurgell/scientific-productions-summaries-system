@@ -26,19 +26,29 @@ public class InstituteController {
         return ResponseEntity.ok(service.findAll());
     }
 
+//    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Page<InstituteDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false,
+//            defaultValue = "0") Integer page,
+//                                                                    @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
+//                                                                    @RequestParam(name = "name", required = false) Optional<String> name,
+//                                                                    @RequestParam(name = "acronym", required = false) Optional<String> acronym)
+//    {
+//            if(name.isPresent())
+//                return ResponseEntity.ok(service.findWithParams(page, limit, "name", name.get()));
+//            else if (acronym.isPresent())
+//                return ResponseEntity.ok(service.findWithParams(page, limit, "acronym", acronym.get()));
+//            else
+//                return ResponseEntity.ok(service.findWithParams(page, limit));
+//    }
+
     @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<InstituteDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false,
             defaultValue = "0") Integer page,
                                                                     @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
-                                                                    @RequestParam(name = "name", required = false) Optional<String> name,
-                                                                    @RequestParam(name = "acronym", required = false) Optional<String> acronym)
+                                                                    @RequestParam(name = "field", required = false) Optional<String> field,
+                                                                    @RequestParam(name = "term", required = false) Optional<String> term)
     {
-            if(name.isPresent())
-                return ResponseEntity.ok(service.findWithParams(page, limit, "name", name.get()));
-            else if (acronym.isPresent())
-                return ResponseEntity.ok(service.findWithParams(page, limit, "acronym", acronym.get()));
-            else
-                return ResponseEntity.ok(service.findWithParams(page, limit));
+        return ResponseEntity.ok(service.findWithParams(page, limit, field, term));
     }
 
     @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})

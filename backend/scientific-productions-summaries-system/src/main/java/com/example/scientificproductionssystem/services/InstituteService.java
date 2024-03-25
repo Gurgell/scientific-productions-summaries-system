@@ -17,8 +17,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InstituteService {
@@ -60,28 +62,52 @@ public class InstituteService {
         return instituteMapper.fromListInstitutesToInstitutesDetailsDTO(institutes);
     }
 
-    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit) {
-        Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
-        Page<Institute> institutes = repository.findAll(pageable);
-        if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
+//    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit) {
+//        Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
+//        Page<Institute> institutes = repository.findAll(pageable);
+//        if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
+//
+//        return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
+//    }
 
-        return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
-    }
-
-    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
-        PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
-
+    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit, Optional<String> field, Optional<String> term) {
         Page<Institute> institutes;
-        if(field.equals("name"))
-            institutes = repository.findByNameContainingIgnoreCase(value, pageRequest);
-        else if(field.equals("acronym"))
-            institutes = repository.findByAcronymStartingWithIgnoreCase(value, pageRequest);
-        else throw new ResourceNotFoundException("Search field wrongly informed!");
+
+        if(field.isEmpty() && term.isEmpty()){
+            Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
+            institutes = repository.findAll(pageable);
+        }
+        else if(field.isEmpty() || term.isEmpty()){
+            throw new ResourceNotFoundException("The field and term should be passed together!");
+        }
+        else{
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
+            if(field.get().equals("name"))
+                institutes = repository.findByNameContainingIgnoreCase(term.get(), pageRequest);
+            else if(field.get().equals("acronym"))
+                institutes = repository.findByAcronymStartingWithIgnoreCase(term.get(), pageRequest);
+            else throw new ResourceNotFoundException("Search field wrongly informed!");
+        }
 
         if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
 
         return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
     }
+
+//    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
+//        PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
+//
+//        Page<Institute> institutes;
+//        if(field.equals("name"))
+//            institutes = repository.findByNameContainingIgnoreCase(value, pageRequest);
+//        else if(field.equals("acronym"))
+//            institutes = repository.findByAcronymStartingWithIgnoreCase(value, pageRequest);
+//        else throw new ResourceNotFoundException("Search field wrongly informed!");
+//
+//        if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
+//
+//        return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
+//    }
 
     public InstituteDetailsDTO update(InstituteUpdateDTO instituteUpdateDTO, Long id) {
         repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this institute ID!"));
