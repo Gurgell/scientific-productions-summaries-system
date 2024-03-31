@@ -97,7 +97,7 @@ public class ResearcherService {
         else{
             PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
             if(field.get().equals("all"))
-                researchers = repository.findByInstitute_NameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrInstitute_NameContainingIgnoreCase(term.get(), term.get(), term.get(), pageRequest);
+                researchers = repository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrInstitute_NameContainingIgnoreCase(term.get(), term.get(), term.get(), pageRequest);
             else if(field.get().equals("name"))
                 researchers = repository.findByNameContainingIgnoreCase(term.get(), pageRequest);
             else if(field.get().equals("email"))
