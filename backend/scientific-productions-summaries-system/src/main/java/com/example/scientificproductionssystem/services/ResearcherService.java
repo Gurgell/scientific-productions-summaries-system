@@ -98,7 +98,7 @@ public class ResearcherService {
         if(field.equals("name"))
             researchers = repository.findByNameContainingIgnoreCase(value, pageRequest);
         else if(field.equals("email"))
-            researchers = repository.findByEmailStartingWithIgnoreCase(value, pageRequest);
+            researchers = repository.findByEmailContainingIgnoreCase(value, pageRequest);
         else throw new ResourceNotFoundException("Search field wrongly informed!");
 
         if (researchers.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
