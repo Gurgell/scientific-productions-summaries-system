@@ -82,7 +82,9 @@ public class InstituteService {
         }
         else{
             PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
-            if(field.get().equals("name"))
+            if(field.get().equals("all"))
+                institutes = repository.findByNameContainingIgnoreCaseOrAcronymStartingWithIgnoreCase(term.get(), term.get(), pageRequest);
+            else if(field.get().equals("name"))
                 institutes = repository.findByNameContainingIgnoreCase(term.get(), pageRequest);
             else if(field.get().equals("acronym"))
                 institutes = repository.findByAcronymStartingWithIgnoreCase(term.get(), pageRequest);

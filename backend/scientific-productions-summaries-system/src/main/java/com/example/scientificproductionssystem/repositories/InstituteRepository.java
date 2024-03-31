@@ -10,4 +10,5 @@ import java.util.List;
 public interface InstituteRepository extends JpaRepository<Institute, Long> {
     Page<Institute> findByNameContainingIgnoreCase(String name, Pageable pageable);
     Page<Institute> findByAcronymStartingWithIgnoreCase(String acronym, Pageable pageable);
+    Page<Institute> findByNameContainingIgnoreCaseOrAcronymStartingWithIgnoreCase(String term, String term2, Pageable pageable);
 }
