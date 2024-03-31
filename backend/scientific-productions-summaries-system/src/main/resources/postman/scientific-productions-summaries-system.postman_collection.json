@@ -243,7 +243,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"id\": \"0485361810192703\",\r\n  \"institute_id\": \"2\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -251,13 +251,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/researcher/curriculum",
+							"raw": "{{baseUrl}}/researcher/curriculum/0485361810192703",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"researcher",
-								"curriculum"
+								"curriculum",
+								"0485361810192703"
 							]
 						},
 						"description": "Finds all people"

@@ -51,9 +51,9 @@ public class researcherController {
         return service.create(researcher);
     }
 
-    @GetMapping(value = "/curriculum", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResearcherDetailsDTO findResearcherByCurriculumId(@RequestBody ResearcherUpdateDTO researcher){
-        return service.findResearcherByCurriculumId(researcher);
+    @GetMapping(value = "/curriculum/{curriculumId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResearcherUpdateDTO findResearcherByCurriculumId(@PathVariable(value = "curriculumId") Long curriculumId){
+        return service.findResearcherByCurriculumId(curriculumId);
     }
 
     @DeleteMapping(value = "/{id}")

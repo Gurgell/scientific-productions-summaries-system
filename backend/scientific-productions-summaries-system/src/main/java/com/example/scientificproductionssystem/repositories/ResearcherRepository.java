@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ResearcherRepository extends JpaRepository<Researcher, Long> {
     Page<Researcher> findByNameContainingIgnoreCase(String name, Pageable pageable);
-    Page<Researcher> findByEmailStartingWithIgnoreCase(String email, Pageable pageable);
+    Page<Researcher> findByEmailContainingIgnoreCase(String email, Pageable pageable);
 }

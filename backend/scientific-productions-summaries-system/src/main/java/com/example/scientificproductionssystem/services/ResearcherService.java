@@ -41,22 +41,18 @@ public class ResearcherService {
         return researcherMapper.toResearcherDetailsDTO(researcher);
     }
 
-    public ResearcherDetailsDTO findResearcherByCurriculumId(ResearcherUpdateDTO researcherUpdateDTO) {
-        if (researcherUpdateDTO == null) throw new RequiredObjectIsNullException();
-        Institute institute = instituteRepository.findById(researcherUpdateDTO.getInstitute_id()).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
-        Researcher researcher = researcherMapper.fromResearcherUpdateDTOToResearcher(researcherUpdateDTO);
+    public ResearcherUpdateDTO findResearcherByCurriculumId(Long curriculumId) {
 
-        researcher.setId(researcherUpdateDTO.getId());
-        String name = xmlSearchService.findResearcherCurriculum(researcher.getId());
-        researcher.setName(name);
+        ResearcherUpdateDTO researcherUpdateDTO = new ResearcherUpdateDTO();
+
+        researcherUpdateDTO.setName(xmlSearchService.findResearcherCurriculum(curriculumId));
+        researcherUpdateDTO.setId(curriculumId);
 
         //Retirando acentos para utilizar o nome no e-mail
-        String email = Normalizer.normalize(researcher.getName(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
-        researcher.setEmail(email.replace(" ", "_").strip().toLowerCase() + "@gmail.com");
+        String email = Normalizer.normalize(researcherUpdateDTO.getName(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        researcherUpdateDTO.setEmail(email.replace(" ", "_").strip().toLowerCase() + "@gmail.com");
 
-        researcher.setInstitute(institute);
-
-        return researcherMapper.toResearcherDetailsDTO(researcher);
+        return researcherUpdateDTO;
     }
 
     public ResearcherDetailsDTO create(ResearcherDetailsDTO researcherDetailsDTO){
@@ -102,7 +98,7 @@ public class ResearcherService {
         if(field.equals("name"))
             researchers = repository.findByNameContainingIgnoreCase(value, pageRequest);
         else if(field.equals("email"))
-            researchers = repository.findByEmailStartingWithIgnoreCase(value, pageRequest);
+            researchers = repository.findByEmailContainingIgnoreCase(value, pageRequest);
         else throw new ResourceNotFoundException("Search field wrongly informed!");
 
         if (researchers.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
