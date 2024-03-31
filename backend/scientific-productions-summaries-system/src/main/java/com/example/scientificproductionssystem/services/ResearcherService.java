@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.Normalizer;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ResearcherService {
@@ -83,25 +84,30 @@ public class ResearcherService {
         return researcherMapper.fromListResearchersToResearchersDetailsDTO(researchers);
     }
 
-    public Page<ResearcherDetailsDTO> findWithParams(Integer page, Integer limit) {
-        Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
-        Page<Researcher> researchers = repository.findAll(pageable);
-        if (researchers.isEmpty()) throw new ResourceNotFoundException("No researchers found!");
-
-        return researcherMapper.fromPageResearchersToResearchersDetailsDTO(researchers);
-    }
-
-    public Page<ResearcherDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
-        PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
-
+    public Page<ResearcherDetailsDTO> findWithParams(Integer page, Integer limit, Optional<String> field, Optional<String> term) {
         Page<Researcher> researchers;
-        if(field.equals("name"))
-            researchers = repository.findByNameContainingIgnoreCase(value, pageRequest);
-        else if(field.equals("email"))
-            researchers = repository.findByEmailContainingIgnoreCase(value, pageRequest);
-        else throw new ResourceNotFoundException("Search field wrongly informed!");
 
-        if (researchers.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
+        if(field.isEmpty() && term.isEmpty()){
+            Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
+            researchers = repository.findAll(pageable);
+        }
+        else if(field.isEmpty() || term.isEmpty()){
+            throw new ResourceNotFoundException("The field and term should be passed together!");
+        }
+        else{
+            PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
+            if(field.get().equals("all"))
+                researchers = repository.findByInstitute_NameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrInstitute_NameContainingIgnoreCase(term.get(), term.get(), term.get(), pageRequest);
+            else if(field.get().equals("name"))
+                researchers = repository.findByNameContainingIgnoreCase(term.get(), pageRequest);
+            else if(field.get().equals("email"))
+                researchers = repository.findByEmailContainingIgnoreCase(term.get(), pageRequest);
+            else if(field.get().equals("institute"))
+                researchers = repository.findByInstitute_NameContainingIgnoreCase(term.get(), pageRequest);
+            else throw new ResourceNotFoundException("Search field wrongly informed!");
+        }
+
+        if (researchers.isEmpty()) throw new ResourceNotFoundException("No researchers found!");
 
         return researcherMapper.fromPageResearchersToResearchersDetailsDTO(researchers);
     }

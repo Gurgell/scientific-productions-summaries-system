@@ -35,15 +35,10 @@ public class researcherController {
     public ResponseEntity<Page<ResearcherDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false,
             defaultValue = "0") Integer page,
                                                                     @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
-                                                                    @RequestParam(name = "name", required = false) Optional<String> name,
-                                                                    @RequestParam(name = "email", required = false) Optional<String> email)
+                                                                     @RequestParam(name = "field", required = false) Optional<String> field,
+                                                                     @RequestParam(name = "term", required = false) Optional<String> term)
     {
-        if(name.isPresent())
-            return ResponseEntity.ok(service.findWithParams(page, limit, "name", name.get()));
-        else if (email.isPresent())
-            return ResponseEntity.ok(service.findWithParams(page, limit, "email", email.get()));
-        else
-            return ResponseEntity.ok(service.findWithParams(page, limit));
+        return ResponseEntity.ok(service.findWithParams(page, limit, field, term));
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
