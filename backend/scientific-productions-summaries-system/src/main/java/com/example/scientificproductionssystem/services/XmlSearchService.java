@@ -96,11 +96,13 @@ public class XmlSearchService {
                                                     Element bookDescriptionData = (Element) bookElement.getElementsByTagName("DETALHAMENTO-DO-CAPITULO").item(0);
 
                                                     String bookTitle = bookDescriptionData.getAttribute("TITULO-DO-LIVRO");
+                                                    String chapterTitle = bookDescriptionData.getAttribute("TITULO-DO-CAPITULO-DO-LIVRO");
                                                     Integer year = Integer.parseInt(bookBasicData.getAttribute("ANO"));
 
                                                     Book book = new Book();
                                                     book.setYear(year);
                                                     book.setTitle(bookTitle);
+                                                    book.setChapterTitle(chapterTitle);
                                                     book.setQuoteNames(getQuoteNames(bookElement));
 
                                                     works.add(book);
