@@ -1,21 +1,18 @@
 package com.example.scientificproductionssystem.services;
 
-import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherUpdateDTO;
 import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullException;
 import com.example.scientificproductionssystem.exceptions.ResourceNotFoundException;
 import com.example.scientificproductionssystem.mapper.ResearcherMapper;
-import com.example.scientificproductionssystem.model.Institute;
 import com.example.scientificproductionssystem.model.Researcher;
+import com.example.scientificproductionssystem.model.Work;
 import com.example.scientificproductionssystem.repositories.InstituteRepository;
 import com.example.scientificproductionssystem.repositories.ResearcherRepository;
 import jakarta.persistence.EntityExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.Normalizer;
 import java.util.List;
@@ -46,8 +43,8 @@ public class ResearcherService {
 
         ResearcherUpdateDTO researcherUpdateDTO = new ResearcherUpdateDTO();
 
-        researcherUpdateDTO.setName(xmlSearchService.findResearcherCurriculum(curriculumId));
         researcherUpdateDTO.setId(curriculumId);
+        researcherUpdateDTO.setName(xmlSearchService.findResearcherName(curriculumId));
 
         //Retirando acentos para utilizar o nome no e-mail
         String email = Normalizer.normalize(researcherUpdateDTO.getName(), Normalizer.Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
@@ -61,13 +58,14 @@ public class ResearcherService {
         instituteRepository.findById(researcherDetailsDTO.getInstitute().getId()).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
 
         if (repository.findById(researcherDetailsDTO.getId()).isPresent()){
-            throw new EntityExistsException("This researcher ID already exists!");
+            throw new EntityExistsException("This researcher ID is already registered on the system!");
         }
 
-        Researcher researcher = researcherMapper.fromResearcherDetailsDTOToResearcher(researcherDetailsDTO);
-        repository.save(researcher);
+        researcherDetailsDTO.setWorks(xmlSearchService.findResearcherWorks(researcherDetailsDTO.getId()));
 
-        return researcherDetailsDTO;
+        Researcher researcher = researcherMapper.fromResearcherDetailsDTOToResearcher(researcherDetailsDTO);
+
+        return researcherMapper.toResearcherDetailsDTO(repository.save(researcher));
     }
 
     public void delete(Long id){

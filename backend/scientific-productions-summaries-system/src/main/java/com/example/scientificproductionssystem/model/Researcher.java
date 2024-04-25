@@ -2,11 +2,13 @@ package com.example.scientificproductionssystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -27,13 +29,25 @@ public class Researcher implements Serializable {
     @NotNull
     private Institute institute;
 
+    @OneToMany(mappedBy = "researcher", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Nullable
+    private List<Work> works;
+
     public Researcher(){}
 
-    public Researcher(Long id, String name, String email, Institute institute) {
+    public Researcher(Long id, String name, String email, Institute institute, @Nullable List<Work> works) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.institute = institute;
+        this.works = works;
+
+        if (works != null){
+            for (Work work : works) {
+                work.setResearcher(this);
+                work.getQuoteNames().forEach(quoteName -> quoteName.setWork(work));
+            }
+        }
     }
 
     public Long getId() {
@@ -68,16 +82,25 @@ public class Researcher implements Serializable {
         this.institute = institute;
     }
 
+    @Nullable
+    public List<Work> getWorks() {
+        return works;
+    }
+
+    public void setWorks(@Nullable List<Work> works) {
+        this.works = works;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Researcher that = (Researcher) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(institute, that.institute);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(institute, that.institute) && Objects.equals(works, that.works);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, institute);
+        return Objects.hash(id, name, email, institute, works);
     }
 }

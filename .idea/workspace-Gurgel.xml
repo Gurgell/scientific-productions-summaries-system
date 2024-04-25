@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="727fe95e-8314-4153-bbb0-366e216395d8" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/dto/XMLDataDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/model/QuoteName.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/model/Work.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/model/worktypes/Article.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/model/worktypes/Book.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/resources/db/migration/V7__Create_Table_Work.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/resources/db/migration/V8__Create_Table_Quote_Name.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/dto/researcher/ResearcherDetailsDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/dto/researcher/ResearcherDetailsDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/dto/researcher/ResearcherUpdateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/dto/researcher/ResearcherUpdateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/model/Researcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/model/Researcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/services/ResearcherService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/services/ResearcherService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/services/XmlSearchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/scientific-productions-summaries-system/src/main/java/com/example/scientificproductionssystem/services/XmlSearchService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend" beforeDir="false" afterPath="$PROJECT_DIR$/frontend" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Record" />
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2dTQl2AsJR5w6hIJEbcH1JPXwgw" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.scientific-productions-summaries-system [package].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Startup.executor": "Run",
+    "extract.method.default.visibility": "private",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/gurge/OneDrive/Desenvolvimento/IdeaProjects/scientific-productions-summaries-system/backend/scientific-productions-summaries-system/src/main/resources/db/migration",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.sourceCode.XML",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\gurge\OneDrive\Desenvolvimento\IdeaProjects\scientific-productions-summaries-system\backend\scientific-productions-summaries-system\src\main\resources\db\migration" />
+      <recent name="C:\Users\gurge\OneDrive\Desenvolvimento\IdeaProjects\scientific-productions-summaries-system\backend\scientific-productions-summaries-system\src\main\resources\curriculum" />
+      <recent name="C:\Users\gurge\OneDrive\Desenvolvimento\IdeaProjects\scientific-productions-summaries-system\backend\scientific-productions-summaries-system\src\main\resources" />
+      <recent name="C:\Users\gurge\OneDrive\Desenvolvimento\IdeaProjects\scientific-productions-summaries-system\backend\scientific-productions-summaries-system\src\main\java\com\example\scientificproductionssystem\mapper" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\gurge\OneDrive\Desenvolvimento\IdeaProjects\scientific-productions-summaries-system\backend\scientific-productions-summaries-system\src\main\resources\db\migration" />
+      <recent name="C:\Users\gurge\OneDrive\Desenvolvimento\IdeaProjects\scientific-productions-summaries-system\frontend" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.example.scientificproductionssystem.dto.institute" />
+      <recent name="com.example.scientificproductionssystem.dto.researcher" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Startup" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="scientific-productions-summaries-system" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.scientificproductionssystem.Startup" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.1-openjdk-21.0.1-3183f394aec4-7d648f2c" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="727fe95e-8314-4153-bbb0-366e216395d8" name="Changes" comment="" />
+      <created>1710029735595</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1710029735595</updated>
+      <workItem from="1710029736635" duration="7944000" />
+      <workItem from="1710073072355" duration="23752000" />
+      <workItem from="1710605102966" duration="28691000" />
+      <workItem from="1710690825685" duration="1337000" />
+      <workItem from="1711120830627" duration="707000" />
+      <workItem from="1711148546062" duration="26000" />
+      <workItem from="1711223489704" duration="4275000" />
+      <workItem from="1711295592840" duration="6221000" />
+      <workItem from="1711333321405" duration="1541000" />
+      <workItem from="1711409963613" duration="3168000" />
+      <workItem from="1711420007664" duration="2144000" />
+      <workItem from="1711924839495" duration="2797000" />
+      <workItem from="1712334652235" duration="4162000" />
+      <workItem from="1712575914603" duration="7795000" />
+      <workItem from="1713180164232" duration="2062000" />
+      <workItem from="1713796759539" duration="21117000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="file" />
+        <watch expression="xmlId" />
+        <watch expression="xmlId" />
+        <watch expression="files" />
+        <watch expression="files" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>

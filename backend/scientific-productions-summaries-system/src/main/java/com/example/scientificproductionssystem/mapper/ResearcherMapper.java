@@ -21,28 +21,48 @@ public class ResearcherMapper {
     private ModelMapper mapper;
 
     public Researcher fromResearcherUpdateDTOToResearcher(ResearcherUpdateDTO researcherUpdateDTO){
-        return mapper.map(researcherUpdateDTO, Researcher.class);
+        return new Researcher(
+                researcherUpdateDTO.getId(),
+                researcherUpdateDTO.getName(),
+                researcherUpdateDTO.getEmail(),
+                null,
+                researcherUpdateDTO.getWorks());
     }
 
     public Researcher fromResearcherDetailsDTOToResearcher(ResearcherDetailsDTO researcherDetailsDTO){
-        return mapper.map(researcherDetailsDTO, Researcher.class);
+        return new Researcher(
+                researcherDetailsDTO.getId(),
+                researcherDetailsDTO.getName(),
+                researcherDetailsDTO.getEmail(),
+                researcherDetailsDTO.getInstitute(),
+                researcherDetailsDTO.getWorks());
     }
 
     public ResearcherUpdateDTO toResearcherUpdateDTO(Researcher researcher){
-        return mapper.map(researcher, ResearcherUpdateDTO.class);
+        return new ResearcherUpdateDTO(
+                researcher.getId(),
+                researcher.getName(),
+                researcher.getEmail(),
+                researcher.getWorks()
+        );
     }
 
     public ResearcherDetailsDTO toResearcherDetailsDTO(Researcher researcher){
-        return mapper.map(researcher, ResearcherDetailsDTO.class);
+        return new ResearcherDetailsDTO(
+                researcher.getId(),
+                researcher.getName(),
+                researcher.getEmail(),
+                researcher.getInstitute(),
+                researcher.getWorks()
+        );
     }
 
     public List<ResearcherDetailsDTO> fromListResearchersToResearchersDetailsDTO(List<Researcher> researchers){
-        List<ResearcherDetailsDTO> researcherDetailsDTO = new ArrayList<>();
+        List<ResearcherDetailsDTO> researcherDetailsDTOS = new ArrayList<>();
         for (Researcher researcher : researchers) {
-            researcherDetailsDTO.add(this.toResearcherDetailsDTO(researcher));
+            researcherDetailsDTOS.add(toResearcherDetailsDTO(researcher));
         }
-
-        return researcherDetailsDTO;
+        return researcherDetailsDTOS;
     }
 
     public Page<ResearcherDetailsDTO> fromPageResearchersToResearchersDetailsDTO(Page<Researcher> researchers){
