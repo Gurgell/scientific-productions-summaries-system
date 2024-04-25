@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "c43bf9e0-bce0-43cf-84aa-09f6e415f784",
+		"_postman_id": "5c57bc82-7363-470d-8f46-0240ee767507",
 		"name": "scientific-productions-summaries-system",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30516674"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28363821"
 	},
 	"item": [
 		{
@@ -26,15 +26,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/institute",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute"
-							]
-						},
+						"url": "{{baseUrl}}/institute",
 						"description": "Finds all people"
 					},
 					"response": []
@@ -56,16 +48,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/institute/2",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute",
-								"2"
-							]
-						},
+						"url": "{{baseUrl}}/institute/2",
 						"description": "Finds all people"
 					},
 					"response": []
@@ -85,16 +68,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/institute/1",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute",
-								"1"
-							]
-						},
+						"url": "{{baseUrl}}/institute/1",
 						"description": "Updates a person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -121,15 +95,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/institute",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute"
-							]
-						},
+						"url": "{{baseUrl}}/institute",
 						"description": "Adds a new person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -139,16 +105,7 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/institute/9",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"institute",
-								"9"
-							]
-						},
+						"url": "{{baseUrl}}/institute/9",
 						"description": "Deletes a person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -175,15 +132,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/researcher",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"researcher"
-							]
-						},
+						"url": "{{baseUrl}}/researcher",
 						"description": "Finds all people"
 					},
 					"response": []
@@ -250,17 +199,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/researcher/curriculum/0485361810192703",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"researcher",
-								"curriculum",
-								"0485361810192703"
-							]
-						},
+						"url": "{{baseUrl}}/researcher/curriculum/0485361810192703",
 						"description": "Finds all people"
 					},
 					"response": []
@@ -282,16 +221,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/researcher/485361810192703",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"researcher",
-								"485361810192703"
-							]
-						},
+						"url": "{{baseUrl}}/researcher/485361810192703",
 						"description": "Finds all people"
 					},
 					"response": []
@@ -318,15 +248,7 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "{{baseUrl}}/researcher",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"researcher"
-							]
-						},
+						"url": "{{baseUrl}}/researcher",
 						"description": "Adds a new person by passing in a JSON or XML representation of the person!"
 					},
 					"response": []
@@ -336,17 +258,57 @@
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/researcher/0485361810192703",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"researcher",
-								"0485361810192703"
-							]
-						},
+						"url": "{{baseUrl}}/researcher/0485361810192703",
 						"description": "Deletes a person by passing in a JSON or XML representation of the person!"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "work",
+			"item": [
+				{
+					"name": "Finds all works",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/work",
+						"description": "Finds all works (books and articles)"
+					},
+					"response": []
+				},
+				{
+					"name": "Finds work by id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{baseUrl}}/work/2",
+						"description": "Finds works by id"
 					},
 					"response": []
 				}
