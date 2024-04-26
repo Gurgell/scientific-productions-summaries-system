@@ -96,7 +96,7 @@ public class XmlSearchService {
                                                     Element bookDescriptionData = (Element) bookElement.getElementsByTagName("DETALHAMENTO-DO-CAPITULO").item(0);
 
                                                     String bookTitle = bookDescriptionData.getAttribute("TITULO-DO-LIVRO");
-                                                    String chapterTitle = bookDescriptionData.getAttribute("TITULO-DO-CAPITULO-DO-LIVRO");
+                                                    String chapterTitle = bookBasicData.getAttribute("TITULO-DO-CAPITULO-DO-LIVRO");
                                                     Integer year = Integer.parseInt(bookBasicData.getAttribute("ANO"));
 
                                                     Book book = new Book();
@@ -164,7 +164,7 @@ public class XmlSearchService {
         for (int m = 0; m < authors.getLength(); m++) {
             Element authorElement = (Element) authors.item(m);
             QuoteName quoteName = new QuoteName();
-            String nomeNormalizado = new String(authorElement.getAttribute("NOME-PARA-CITACAO").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
+            String nomeNormalizado = authorElement.getAttribute("NOME-PARA-CITACAO");
             quoteName.setName(nomeNormalizado);
             quoteNames.add(quoteName);
         }
