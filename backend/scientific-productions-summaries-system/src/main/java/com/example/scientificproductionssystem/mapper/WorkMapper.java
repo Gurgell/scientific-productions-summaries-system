@@ -40,11 +40,12 @@ public class WorkMapper {
             details += book.getChapterTitle() + ". ";
         }
 
-        details += work.getTitle();
+        details += work.getTitle() + ". ";
 
         if(work.getClass() == Article.class){
             Article article = (Article) work;
-            details += article.getPlace() + ", ";
+            if (article.getPlace() != null)
+                details += article.getPlace() + ", ";
         }
 
         details += work.getYear();
