@@ -1,10 +1,15 @@
 package com.example.scientificproductionssystem.mapper;
 
+import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
 import com.example.scientificproductionssystem.dto.work.WorkDetailsDTO;
 import com.example.scientificproductionssystem.model.QuoteName;
+import com.example.scientificproductionssystem.model.Researcher;
 import com.example.scientificproductionssystem.model.Work;
+import com.example.scientificproductionssystem.model.worktypes.Article;
+import com.example.scientificproductionssystem.model.worktypes.Book;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,11 +32,27 @@ public class WorkMapper {
                     quotes += " . ";
             }
         }
+
+        String details = "";
+
+        if(work.getClass() == Book.class){
+            Book book = (Book) work;
+            details += book.getChapterTitle() + ". ";
+        }
+
+        details += work.getTitle();
+
+        if(work.getClass() == Article.class){
+            Article article = (Article) work;
+            details += article.getPlace() + ", ";
+        }
+
+        details += work.getYear();
         
         return new WorkDetailsDTO(
                 work.getId(),
                 work.getClass().getSimpleName(),
-                new StringBuilder(quotes + work.getTitle() + ", " + work.getYear()).toString()
+                new StringBuilder(quotes + details).toString()
         );
     }
 
@@ -41,6 +62,10 @@ public class WorkMapper {
             workDetailsDTOS.add(toWorkDetailsDTO(work));
         }
         return workDetailsDTOS;
+    }
+
+    public Page<WorkDetailsDTO> fromPageWorksToWorksDetailsDTO(Page<Work> works){
+        return works.map(this::toWorkDetailsDTO);
     }
 
 }
