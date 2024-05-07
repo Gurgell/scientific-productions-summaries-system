@@ -24,6 +24,11 @@ public class QuoteName implements Serializable {
 
     public QuoteName(){}
 
+    public QuoteName(String name, Work work){
+        this.name = name;
+        this.work = work;
+    }
+
     public Long getId() {
         return id;
     }

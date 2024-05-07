@@ -164,8 +164,20 @@ public class XmlSearchService {
             Element authorElement = (Element) authors.item(m);
             QuoteName quoteName = new QuoteName();
             String nomeNormalizado = authorElement.getAttribute("NOME-PARA-CITACAO");
-            quoteName.setName(nomeNormalizado);
-            quoteNames.add(quoteName);
+
+            if (nomeNormalizado.contains(";")){
+                String[] arrayNomes = nomeNormalizado.split(";");
+
+                for (String name : arrayNomes) {
+                    QuoteName newQuoteName = new QuoteName();
+                    newQuoteName.setName(name);
+                    quoteNames.add(newQuoteName);
+                }
+            } else {
+                QuoteName newQuoteName = new QuoteName();
+                newQuoteName.setName(nomeNormalizado);
+                quoteNames.add(newQuoteName);
+            }
         }
 
         return quoteNames;
