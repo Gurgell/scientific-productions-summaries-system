@@ -69,7 +69,7 @@ public class XmlSearchService {
 
                                             String articleTitle = articleBasicData.getAttribute("TITULO-DO-ARTIGO");
                                             Integer year = Integer.parseInt(articleBasicData.getAttribute("ANO-DO-ARTIGO"));
-                                            String place = articleDescriptionData.getAttribute("LOCAL-DE-PUBLICACAO");
+                                            String place = articleDescriptionData.getAttribute("TITULO-DO-PERIODICO-OU-REVISTA");
                                             getQuoteNames(articleElement);
 
                                             Article article = new Article();
