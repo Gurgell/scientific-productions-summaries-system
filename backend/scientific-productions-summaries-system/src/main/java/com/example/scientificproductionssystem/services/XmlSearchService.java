@@ -46,12 +46,12 @@ public class XmlSearchService {
                         Long xmlId = getCurriculumId(file, element);
 
                         if (xmlId.toString().equals(id.toString())) {
-                            Element generalData = (Element) element.getElementsByTagName("DADOS-GERAIS").item(0);
                             Element bibliographicProduction = (Element) element.getElementsByTagName("PRODUCAO-BIBLIOGRAFICA").item(0);
-                            NodeList productions = bibliographicProduction.getChildNodes();
 
-                            String name = generalData.getAttribute("NOME-COMPLETO");
                             List<Work> works = new ArrayList<>();
+                            if (bibliographicProduction == null) return works;
+
+                            NodeList productions = bibliographicProduction.getChildNodes();
 
                             for (int j = 0; j < productions.getLength(); j++) {
                                 Node production = productions.item(j);
@@ -112,7 +112,6 @@ public class XmlSearchService {
                                     }
                                 }
                             }
-                            //if (works.isEmpty()) throw new ResourceNotFoundException("This researcher's work list is empty");
                             return works;
                         }
                     }
@@ -165,8 +164,20 @@ public class XmlSearchService {
             Element authorElement = (Element) authors.item(m);
             QuoteName quoteName = new QuoteName();
             String nomeNormalizado = authorElement.getAttribute("NOME-PARA-CITACAO");
-            quoteName.setName(nomeNormalizado);
-            quoteNames.add(quoteName);
+
+            if (nomeNormalizado.contains(";")){
+                String[] arrayNomes = nomeNormalizado.split(";");
+
+                for (String name : arrayNomes) {
+                    QuoteName newQuoteName = new QuoteName();
+                    newQuoteName.setName(name);
+                    quoteNames.add(newQuoteName);
+                }
+            } else {
+                QuoteName newQuoteName = new QuoteName();
+                newQuoteName.setName(nomeNormalizado);
+                quoteNames.add(newQuoteName);
+            }
         }
 
         return quoteNames;

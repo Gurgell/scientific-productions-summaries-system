@@ -1,0 +1,1 @@
+ALTER TABLE `researcher` MODIFY COLUMN `institute_id` bigint NOT NULL;
