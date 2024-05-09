@@ -14,8 +14,10 @@ import java.util.List;
 public interface WorkRepository extends JpaRepository<Work, Long> {
     Page<Work> findByResearcherIdAndYearBetween(Long researcherId, Integer startYear, Integer endYear, Pageable pageable);
     Page<Work> findByYearBetween(Integer startYear, Integer endYear, Pageable pageable);
+    Page<Work> findByResearcherInstituteIdAndYearBetween(Long instituteId, Integer startYear, Integer endYear, Pageable pageable);
+    Page<Work> findByResearcherIdAndResearcherInstituteIdAndYearBetween(Long researcherId, Long instituteId, Integer startYear, Integer endYear, Pageable pageable);
 
-//    @Query("SELECT w FROM Work w WHERE (:institute is null OR w.researcher.institute = :institute) AND " +
+    //    @Query("SELECT w FROM Work w WHERE (:institute is null OR w.researcher.institute = :institute) AND " +
 //            "(:researcher is null OR w.researcher = :researcher) AND " +
 //            "(:startYear is null OR w.year >= :startYear) AND " +
 //            "(:endYear is null OR w.year <= :endYear) AND " +

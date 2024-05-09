@@ -58,13 +58,14 @@ public class WorkService {
 
         if (idInstitute.isPresent() && idResearcher.isPresent()) {
            if(type.equals("book"))
-                works = bookRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+                //works = bookRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+               works = bookRepository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
 
             else if(type.equals("article"))
-                works = articleRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+                works = articleRepository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
 
             else //all
-                works = repository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+                works = repository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
         }
 
 //        else if (idInstitute.isPresent()) {
@@ -84,6 +85,17 @@ public class WorkService {
 
             else //all
                 works = repository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+        }
+
+        else if(idInstitute.isPresent()){
+            if(type.equals("book"))
+                works = bookRepository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear, pageable);
+
+            else if(type.equals("article"))
+                works = articleRepository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear, pageable);
+
+            else //all
+                works = repository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear, pageable);
         }
 
         else {  //idResearcher.isEmpty() && idInstitute.isEmpty()
