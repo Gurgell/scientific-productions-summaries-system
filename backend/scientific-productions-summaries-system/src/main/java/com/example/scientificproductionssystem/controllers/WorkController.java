@@ -42,4 +42,17 @@ public class WorkController {
     {
         return ResponseEntity.ok(service.findWithParams(page, limit, startYear, endYear, idInstitute, idResearcher, type));
     }
+
+//    @GetMapping(value="/searchv2", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Page<WorkDetailsDTO>> findAllByDateOrInstituteOrResearcherOrType(@RequestParam(name = "page", required = false,
+//            defaultValue = "0") Integer page,
+//                                                               @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
+//                                                               @RequestParam(name = "startYear", required = false, defaultValue = "0000") Integer startYear,
+//                                                               @RequestParam(name = "endYear", required = false, defaultValue = "2030") Integer endYear,
+//                                                               @RequestParam(name = "idInstitute", required = false) Long idInstitute,
+//                                                               @RequestParam(name = "idResearcher", required = false) Long idResearcher,
+//                                                               @RequestParam(name = "type", required = false, defaultValue = "todos") String type)
+//    {
+//        return ResponseEntity.ok(service.findAllByDateOrInstituteOrResearcherOrType(page, limit, startYear, endYear, idInstitute, idResearcher, type));
+//    }
 }
