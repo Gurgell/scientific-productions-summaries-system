@@ -20,8 +20,4 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
     List<Work> findByResearcherInstituteIdAndYearBetween(Long instituteId, Integer startYear, Integer endYear);
     Page<Work> findByResearcherIdAndResearcherInstituteIdAndYearBetween(Long researcherId, Long instituteId, Integer startYear, Integer endYear, Pageable pageable);
     List<Work> findByResearcherIdAndResearcherInstituteIdAndYearBetween(Long researcherId, Long instituteId, Integer startYear, Integer endYear);
-
-    List<Work> findByResearcherIdAndResearcherInstituteIdAndYearBetween(Long researcherId, Long instituteId, Integer startYear, Integer endYear);
-
-
 }
