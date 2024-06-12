@@ -68,13 +68,6 @@ public class WorkService {
                 works = repository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
         }
 
-//        else if (idInstitute.isPresent()) {
-//            if(type.equals("all"))
-//
-//            else if(type.equals("book"))
-//
-//            else if(type.equals("article"))
-//        }
 
         else if(idResearcher.isPresent()){
             if(type.equals("book"))
@@ -109,64 +102,8 @@ public class WorkService {
                 works = repository.findByYearBetween(startYear, endYear, pageable);
         }
 
-        //Validando se existem trabalhos repetidos
-        List<WorkDetailsDTO> uniqueWorkDTOs = new ArrayList<>();
-        Set<String> uniqueWorksByTitleAndYearAndChapterTitleAndPlace = new HashSet<>();
-
-        for (Work work : works) {
-            String chapterTitle = "";
-            String place = "";
-            if (work instanceof Book) chapterTitle = ((Book) work).getChapterTitle();
-            else if (work instanceof Article) place = ((Article) work).getPlace();
-
-            //Analisar esse parte do código para adicionar ao equals & hashcode da classe
-            String workHash = work.getTitle() + "-" + work.getYear() + "-" + chapterTitle + "-" + place;
-            if (!uniqueWorksByTitleAndYearAndChapterTitleAndPlace.contains(workHash)) {
-                uniqueWorksByTitleAndYearAndChapterTitleAndPlace.add(workHash);
-                uniqueWorkDTOs.add(workMapper.toWorkDetailsDTO(work));
-            }
-        }
-
-        if (uniqueWorkDTOs.isEmpty()) throw new ResourceNotFoundException("No works found!");
-
-        return new PageImpl<>(uniqueWorkDTOs, pageable, uniqueWorkDTOs.size());
+        return workMapper.fromPageWorksToWorksDetailsDTO(works);
     }
 
-//    public Page<WorkDetailsDTO> findAllByDateOrInstituteOrResearcherOrType(Integer page, Integer limit, Integer startYear, Integer endYear, Long idInstitute, Long idResearcher, String type) {
-//        Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
-//
-//        Institute institute = null;
-//        Researcher researcher = null;
-//        if (idInstitute != null) {
-//            institute = instituteRepository.findById(idInstitute).orElse(null);
-//        }
-//
-//        if (idResearcher != null) {
-//            researcher = researcherRepository.findById(idResearcher).orElse(null);
-//        }
-//
-//        //Recuperando a lista de trabalhos de acordo com os critérios passados pelo usuário
-//        Page<Work> works = repository.findAllByDateOrInstituteOrResearcherOrType(institute, researcher, startYear, endYear, type, pageable);
-//        if (works.isEmpty()) throw new ResourceNotFoundException("No works found!");
-//
-//        //Validando se o trabalho é único
-//        List<WorkDetailsDTO> uniqueWorkDTOs = new ArrayList<>();
-//        Set<String> uniqueWorksByTitleAndYearAndChapterTitleAndPlace = new HashSet<>();
-//
-//        for (Work work : works) {
-//            String chapterTitle = "";
-//            String place = "";
-//            if (work instanceof Book) chapterTitle = ((Book) work).getChapterTitle();
-//            else if (work instanceof Article) place = ((Article) work).getPlace();
-//
-//            //Analisar esse parte do código para adicionar ao equals & hashcode da classe
-//            String workHash = work.getTitle() + "-" + work.getYear() + "-" + chapterTitle + "-" + place;
-//            if (!uniqueWorksByTitleAndYearAndChapterTitleAndPlace.contains(workHash)) {
-//                uniqueWorksByTitleAndYearAndChapterTitleAndPlace.add(workHash);
-//                uniqueWorkDTOs.add(workMapper.toWorkDetailsDTO(work));
-//            }
-//        }
-//
-//        return new PageImpl<>(uniqueWorkDTOs, pageable, uniqueWorkDTOs.size());
-//    }
+
 }

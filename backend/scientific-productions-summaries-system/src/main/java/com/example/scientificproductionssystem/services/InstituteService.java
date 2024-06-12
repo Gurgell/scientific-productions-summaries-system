@@ -21,6 +21,7 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class InstituteService {
@@ -96,21 +97,6 @@ public class InstituteService {
         return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
     }
 
-//    public Page<InstituteDetailsDTO> findWithParams(Integer page, Integer limit, String field, String value) {
-//        PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
-//
-//        Page<Institute> institutes;
-//        if(field.equals("name"))
-//            institutes = repository.findByNameContainingIgnoreCase(value, pageRequest);
-//        else if(field.equals("acronym"))
-//            institutes = repository.findByAcronymStartingWithIgnoreCase(value, pageRequest);
-//        else throw new ResourceNotFoundException("Search field wrongly informed!");
-//
-//        if (institutes.isEmpty()) throw new ResourceNotFoundException("No institutes found!");
-//
-//        return instituteMapper.fromPageInstitutesToInstitutesDetailsDTO(institutes);
-//    }
-
     public InstituteDetailsDTO update(InstituteUpdateDTO instituteUpdateDTO, Long id) {
         repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this institute ID!"));
 
@@ -120,4 +106,5 @@ public class InstituteService {
 
         return instituteMapper.toInstituteDetailsDTO(institute);
     }
+
 }

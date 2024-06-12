@@ -1,5 +1,6 @@
 package com.example.scientificproductionssystem.services;
 
+import com.example.scientificproductionssystem.dto.institute.InstituteDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherDetailsDTO;
 import com.example.scientificproductionssystem.dto.researcher.ResearcherUpdateDTO;
 import com.example.scientificproductionssystem.exceptions.RequiredObjectIsNullException;
@@ -33,7 +34,7 @@ public class ResearcherService {
     @Autowired
     XmlSearchService xmlSearchService;
 
-    public ResearcherDetailsDTO findById(Long id){
+    public ResearcherDetailsDTO findById(Long id) {
         Researcher researcher = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         return researcherMapper.toResearcherDetailsDTO(researcher);
@@ -53,11 +54,11 @@ public class ResearcherService {
         return researcherUpdateDTO;
     }
 
-    public ResearcherDetailsDTO create(ResearcherDetailsDTO researcherDetailsDTO){
+    public ResearcherDetailsDTO create(ResearcherDetailsDTO researcherDetailsDTO) {
         if (researcherDetailsDTO == null) throw new RequiredObjectIsNullException();
         instituteRepository.findById(researcherDetailsDTO.getInstitute().getId()).orElseThrow(() -> new RequiredObjectIsNullException("No records found for this institute ID!"));
 
-        if (repository.findById(researcherDetailsDTO.getId()).isPresent()){
+        if (repository.findById(researcherDetailsDTO.getId()).isPresent()) {
             throw new EntityExistsException("This researcher ID is already registered on the system!");
         }
 
@@ -68,7 +69,7 @@ public class ResearcherService {
         return researcherMapper.toResearcherDetailsDTO(repository.save(researcher));
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         ResearcherDetailsDTO researcherDetailsDTO = this.findById(id);
 
         Researcher researcher = researcherMapper.fromResearcherDetailsDTOToResearcher(researcherDetailsDTO);
@@ -85,22 +86,20 @@ public class ResearcherService {
     public Page<ResearcherDetailsDTO> findWithParams(Integer page, Integer limit, Optional<String> field, Optional<String> term) {
         Page<Researcher> researchers;
 
-        if(field.isEmpty() && term.isEmpty()){
+        if (field.isEmpty() && term.isEmpty()) {
             Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
             researchers = repository.findAll(pageable);
-        }
-        else if(field.isEmpty() || term.isEmpty()){
+        } else if (field.isEmpty() || term.isEmpty()) {
             throw new ResourceNotFoundException("The field and term should be passed together!");
-        }
-        else{
+        } else {
             PageRequest pageRequest = PageRequest.of(page, limit, Sort.unsorted());
-            if(field.get().equals("all"))
+            if (field.get().equals("all"))
                 researchers = repository.findByNameContainingIgnoreCaseOrEmailContainingIgnoreCaseOrInstitute_NameContainingIgnoreCase(term.get(), term.get(), term.get(), pageRequest);
-            else if(field.get().equals("name"))
+            else if (field.get().equals("name"))
                 researchers = repository.findByNameContainingIgnoreCase(term.get(), pageRequest);
-            else if(field.get().equals("email"))
+            else if (field.get().equals("email"))
                 researchers = repository.findByEmailContainingIgnoreCase(term.get(), pageRequest);
-            else if(field.get().equals("institute"))
+            else if (field.get().equals("institute"))
                 researchers = repository.findByInstitute_NameContainingIgnoreCase(term.get(), pageRequest);
             else throw new ResourceNotFoundException("Search field wrongly informed!");
         }
@@ -110,4 +109,7 @@ public class ResearcherService {
         return researcherMapper.fromPageResearchersToResearchersDetailsDTO(researchers);
     }
 
+    public List<ResearcherDetailsDTO> findAllById(List<Long> ids) {
+        return researcherMapper.fromListResearchersToResearchersDetailsDTO(repository.findAllById(ids));
+    }
 }

@@ -3,6 +3,7 @@ package com.example.scientificproductionssystem.services;
 import com.example.scientificproductionssystem.exceptions.ResourceNotFoundException;
 import com.example.scientificproductionssystem.exceptions.handler.CustomizedResponseEntityExceptionHandler;
 import com.example.scientificproductionssystem.model.QuoteName;
+import com.example.scientificproductionssystem.model.Researcher;
 import com.example.scientificproductionssystem.model.Work;
 import com.example.scientificproductionssystem.model.worktypes.Article;
 import com.example.scientificproductionssystem.model.worktypes.Book;
@@ -40,6 +41,10 @@ public class XmlSearchService {
                     doc.getDocumentElement().normalize();
 
                     NodeList nodeList = doc.getElementsByTagName("CURRICULO-VITAE");
+                    
+                    Element x = (Element) nodeList.item(0);
+                    Element dadosGerais = (Element) x.getElementsByTagName("DADOS-GERAIS").item(0);
+                    String availableQuoteNames = dadosGerais.getAttribute("NOME-EM-CITACOES-BIBLIOGRAFICAS");
 
                     for (int i = 0; i < nodeList.getLength(); i++) { //Iterando para buscar o ID de cada XML. (Ou pelo nome do arquivo ou dentro da TAG "CURRICULO-VITAE")
                         Element element = (Element) nodeList.item(i);
@@ -112,6 +117,12 @@ public class XmlSearchService {
                                     }
                                 }
                             }
+                            if (!works.isEmpty()){
+                                Researcher researcher = new Researcher();
+                                researcher.setAvailableQuoteNames(availableQuoteNames);
+                                works.forEach(w -> w.setResearcher(researcher));
+                            }
+
                             return works;
                         }
                     }

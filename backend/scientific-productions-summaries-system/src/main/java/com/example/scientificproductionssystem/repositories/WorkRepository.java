@@ -16,19 +16,4 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
     Page<Work> findByYearBetween(Integer startYear, Integer endYear, Pageable pageable);
     Page<Work> findByResearcherInstituteIdAndYearBetween(Long instituteId, Integer startYear, Integer endYear, Pageable pageable);
     Page<Work> findByResearcherIdAndResearcherInstituteIdAndYearBetween(Long researcherId, Long instituteId, Integer startYear, Integer endYear, Pageable pageable);
-
-    //    @Query("SELECT w FROM Work w WHERE (:institute is null OR w.researcher.institute = :institute) AND " +
-//            "(:researcher is null OR w.researcher = :researcher) AND " +
-//            "(:startYear is null OR w.year >= :startYear) AND " +
-//            "(:endYear is null OR w.year <= :endYear) AND " +
-//            "(:workType is null OR :workType = 'all') OR " +
-//            "((CASE WHEN TYPE(w) = Book THEN 'book' ELSE 'article' END) = :workType)")
-//    Page<Work> findAllByDateOrInstituteOrResearcherOrType(
-//            @Param("institute") Institute institute,
-//            @Param("researcher") Researcher researcher,
-//            @Param("startYear") Integer startYear,
-//            @Param("endYear") Integer endYear,
-//            @Param("workType") String workType,
-//            Pageable pageable
-//    );
 }

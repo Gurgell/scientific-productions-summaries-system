@@ -1,0 +1,1 @@
+ALTER TABLE `researcher` ADD COLUMN `available_quote_names` VARCHAR(1000);

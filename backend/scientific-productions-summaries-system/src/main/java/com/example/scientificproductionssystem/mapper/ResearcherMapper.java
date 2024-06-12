@@ -20,22 +20,20 @@ public class ResearcherMapper {
     @Autowired
     private ModelMapper mapper;
 
-    public Researcher fromResearcherUpdateDTOToResearcher(ResearcherUpdateDTO researcherUpdateDTO){
-        return new Researcher(
-                researcherUpdateDTO.getId(),
-                researcherUpdateDTO.getName(),
-                researcherUpdateDTO.getEmail(),
-                null,
-                researcherUpdateDTO.getWorks());
-    }
 
     public Researcher fromResearcherDetailsDTOToResearcher(ResearcherDetailsDTO researcherDetailsDTO){
+        String availableQuoteNames = null;
+        if (researcherDetailsDTO.getWorks() != null && !researcherDetailsDTO.getWorks().isEmpty()){
+            availableQuoteNames = researcherDetailsDTO.getWorks().getFirst().getResearcher().getAvailableQuoteNames();
+        }
         return new Researcher(
                 researcherDetailsDTO.getId(),
                 researcherDetailsDTO.getName(),
                 researcherDetailsDTO.getEmail(),
                 researcherDetailsDTO.getInstitute(),
-                researcherDetailsDTO.getWorks());
+                researcherDetailsDTO.getWorks(),
+                availableQuoteNames
+                );
     }
 
     public ResearcherUpdateDTO toResearcherUpdateDTO(Researcher researcher){

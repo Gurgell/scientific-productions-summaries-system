@@ -5,7 +5,6 @@ import java.util.Objects;
 
 public class WorkDetailsDTO implements Serializable {
     private Long id;
-
     private String type;
     private String Details;
 

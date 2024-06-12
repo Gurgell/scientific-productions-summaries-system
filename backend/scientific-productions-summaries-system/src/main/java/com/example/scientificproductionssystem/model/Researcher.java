@@ -33,14 +33,18 @@ public class Researcher implements Serializable {
     @Nullable
     private List<Work> works;
 
+    @Column(name = "available_quote_names")
+    private String availableQuoteNames;
+
     public Researcher(){}
 
-    public Researcher(Long id, String name, String email, Institute institute, @Nullable List<Work> works) {
+    public Researcher(Long id, String name, String email, Institute institute, @Nullable List<Work> works, String availableQuoteNames) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.institute = institute;
         this.works = works;
+        this.availableQuoteNames = availableQuoteNames;
 
         if (works != null){
             for (Work work : works) {
@@ -91,16 +95,24 @@ public class Researcher implements Serializable {
         this.works = works;
     }
 
+    public String getAvailableQuoteNames() {
+        return availableQuoteNames;
+    }
+
+    public void setAvailableQuoteNames(String availableQuoteNames) {
+        this.availableQuoteNames = availableQuoteNames;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Researcher that = (Researcher) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(institute, that.institute) && Objects.equals(works, that.works);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(email, that.email) && Objects.equals(institute, that.institute) && Objects.equals(works, that.works) && Objects.equals(availableQuoteNames, that.availableQuoteNames);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, institute, works);
+        return Objects.hash(id, name, email, institute, works, availableQuoteNames);
     }
 }

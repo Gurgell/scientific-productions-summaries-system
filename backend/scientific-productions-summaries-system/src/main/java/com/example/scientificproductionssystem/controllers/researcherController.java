@@ -51,6 +51,11 @@ public class researcherController {
         return service.findResearcherByCurriculumId(curriculumId);
     }
 
+    @PostMapping(value = "/findAllByListOfId", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public List<ResearcherDetailsDTO> findAllByListOfId(@RequestBody List<Long> ids){
+        return service.findAllById(ids);
+    }
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id") Long id){
         service.delete(id);
