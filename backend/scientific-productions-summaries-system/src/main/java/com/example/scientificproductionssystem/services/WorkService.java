@@ -52,57 +52,82 @@ public class WorkService {
     }
 
     public Page<WorkDetailsDTO> findWithParams(Integer page, Integer limit, Integer startYear, Integer endYear, Optional<Long> idInstitute, Optional<Long> idResearcher, String type) {
-        Page<Work> works;
+//        Page<Work> works;
+        List<Work> works;
 
         Pageable pageable = PageRequest.of(page, limit, Sort.unsorted());
 
         if (idInstitute.isPresent() && idResearcher.isPresent()) {
            if(type.equals("book"))
-                //works = bookRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
-               works = bookRepository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
+               works = bookRepository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear);
 
             else if(type.equals("article"))
-                works = articleRepository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
+                works = articleRepository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear);
 
-            else //all
-                works = repository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear, pageable);
+            else
+                works = repository.findByResearcherIdAndResearcherInstituteIdAndYearBetween(idResearcher.get(), idInstitute.get(), startYear, endYear);
         }
-
 
         else if(idResearcher.isPresent()){
             if(type.equals("book"))
-                works = bookRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+                works = bookRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear);
 
             else if(type.equals("article"))
-                works = articleRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+                works = articleRepository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear);
 
-            else //all
-                works = repository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear, pageable);
+            else
+                works = repository.findByResearcherIdAndYearBetween(idResearcher.get(), startYear, endYear);
         }
 
         else if(idInstitute.isPresent()){
             if(type.equals("book"))
-                works = bookRepository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear, pageable);
+                works = bookRepository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear);
 
             else if(type.equals("article"))
-                works = articleRepository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear, pageable);
+                works = articleRepository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear);
 
-            else //all
-                works = repository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear, pageable);
+            else
+                works = repository.findByResearcherInstituteIdAndYearBetween(idInstitute.get(), startYear, endYear);
         }
 
-        else {  //idResearcher.isEmpty() && idInstitute.isEmpty()
+        else{
             if(type.equals("book"))
-                works = bookRepository.findByYearBetween(startYear, endYear, pageable);
+                works = bookRepository.findByYearBetween(startYear, endYear);
 
             else if(type.equals("article"))
-                works = articleRepository.findByYearBetween(startYear, endYear, pageable);
+                works = articleRepository.findByYearBetween(startYear, endYear);
 
-            else //all
-                works = repository.findByYearBetween(startYear, endYear, pageable);
+            else
+                works = repository.findByYearBetween(startYear, endYear);
         }
 
-        return workMapper.fromPageWorksToWorksDetailsDTO(works);
+
+
+        //Validando se existem trabalhos repetidos
+        List<WorkDetailsDTO> uniqueWorkDTOs = new ArrayList<>();
+        Set<String> uniqueWorksByTitleAndYearAndChapterTitleAndPlace = new HashSet<>();
+
+        for (Work work : works) {
+            String chapterTitle = "";
+            String place = "";
+            if (work instanceof Book) chapterTitle = ((Book) work).getChapterTitle();
+            else if (work instanceof Article) place = ((Article) work).getPlace();
+
+            //Analisar esse parte do código para adicionar ao equals & hashcode da classe
+            String workHash = work.getTitle() + "-" + work.getYear() + "-" + chapterTitle + "-" + place;
+            if (!uniqueWorksByTitleAndYearAndChapterTitleAndPlace.contains(workHash)) {
+                uniqueWorksByTitleAndYearAndChapterTitleAndPlace.add(workHash);
+                uniqueWorkDTOs.add(workMapper.toWorkDetailsDTO(work));
+            }
+        }
+
+        if (uniqueWorkDTOs.isEmpty()) throw new ResourceNotFoundException("No works found!");
+
+        //Capturando os indexes de início e fim da página requerida, para criação manual do resultado.
+        int start = (int) pageable.getOffset(); //Offset seria o index inicial baseado na página atual e no tamanho de cada página
+        int end = Math.min((start + pageable.getPageSize()), uniqueWorkDTOs.size()); //Defesa para o caso do index final da página ser maior que o tamanho da lista
+
+        return new PageImpl<>(uniqueWorkDTOs.subList(start, end), pageable, uniqueWorkDTOs.size());
     }
 
 
