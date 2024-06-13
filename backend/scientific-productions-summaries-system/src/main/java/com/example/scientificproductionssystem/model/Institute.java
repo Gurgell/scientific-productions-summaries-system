@@ -70,11 +70,11 @@ public class Institute implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Institute institute = (Institute) o;
-        return Objects.equals(id, institute.id) && Objects.equals(name, institute.name) && Objects.equals(acronym, institute.acronym) && Objects.equals(researchers, institute.researchers);
+        return Objects.equals(id, institute.id) && Objects.equals(name, institute.name) && Objects.equals(acronym, institute.acronym);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, acronym, researchers);
+        return Objects.hash(id, name, acronym);
     }
 }
