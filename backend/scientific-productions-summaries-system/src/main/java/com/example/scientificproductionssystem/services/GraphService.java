@@ -5,6 +5,9 @@ import com.example.scientificproductionssystem.model.Institute;
 import com.example.scientificproductionssystem.model.QuoteName;
 import com.example.scientificproductionssystem.model.Researcher;
 import com.example.scientificproductionssystem.model.Work;
+import com.example.scientificproductionssystem.model.enums.DesiredWorkType;
+import com.example.scientificproductionssystem.model.worktypes.Article;
+import com.example.scientificproductionssystem.model.worktypes.Book;
 import com.example.scientificproductionssystem.repositories.InstituteRepository;
 import com.example.scientificproductionssystem.repositories.ResearcherRepository;
 
@@ -47,13 +50,21 @@ public class GraphService {
             researchers = researcherRepository.findAll();
         }
 
-        if (vertexType.equals("institute")) return convertInstituteGraphToJson(buildInstitutesGraph(researchers));
+        DesiredWorkType workType = null;
 
-        return convertResearcherGraphToJson(buildResearchersGraph(researchers));
+        switch (productionType.toUpperCase()){
+            case "ARTICLE": workType = DesiredWorkType.ARTICLE; break;
+            case "BOOK": workType = DesiredWorkType.BOOK; break;
+            default: break;
+        }
+
+        if (vertexType.equals("institute")) return convertInstituteGraphToJson(buildInstitutesGraph(researchers, Optional.ofNullable(workType)));
+
+        return convertResearcherGraphToJson(buildResearchersGraph(researchers, Optional.ofNullable(workType)));
 
     }
 
-    public Graph<Institute, DefaultWeightedEdge> buildInstitutesGraph(List<Researcher> researchers) {
+    public Graph<Institute, DefaultWeightedEdge> buildInstitutesGraph(List<Researcher> researchers, Optional<DesiredWorkType> workType) {
         Graph<Institute, DefaultWeightedEdge> graph = new DefaultUndirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
         List<Institute> institutes = instituteRepository.findAllByResearchers(researchers);
@@ -66,6 +77,12 @@ public class GraphService {
             for (Researcher researcher : institute.getResearchers()) {
                 if (researcher != null && researcher.getWorks() != null) {
                     for (Work work : researcher.getWorks()) {
+
+                        if(workType.isPresent()){
+                            if(workType.get() == DesiredWorkType.ARTICLE && work.getClass() != Article.class) continue;
+                            if(workType.get() == DesiredWorkType.BOOK && work.getClass() != Book.class) continue;
+                        }
+
                         for (QuoteName quoteName : work.getQuoteNames()) {
 
                             List<Researcher> connectedResearchers = researchers.stream()
@@ -96,7 +113,7 @@ public class GraphService {
         return graph;
     }
 
-    public Graph<Researcher, DefaultWeightedEdge> buildResearchersGraph(List<Researcher> researchers){
+    public Graph<Researcher, DefaultWeightedEdge> buildResearchersGraph(List<Researcher> researchers, Optional<DesiredWorkType> workType){
 
         Graph<Researcher, DefaultWeightedEdge> graph = new DefaultUndirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
@@ -107,6 +124,12 @@ public class GraphService {
         for (Researcher researcher : researchers) {
             if (researcher != null && researcher.getWorks() != null) {
                 for (Work work : researcher.getWorks()) {
+
+                    if(workType.isPresent()){
+                        if(workType.get() == DesiredWorkType.ARTICLE && work.getClass() != Article.class) continue;
+                        if(workType.get() == DesiredWorkType.BOOK && work.getClass() != Book.class) continue;
+                    }
+
                     for (QuoteName quoteName : work.getQuoteNames()) {
                         Researcher connectedResearcher = findResearchersByQuoteName(quoteName.getName(), researchers.stream()
                                 .filter(r -> r != null && !r.equals(researcher))
