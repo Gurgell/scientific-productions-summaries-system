@@ -38,6 +38,10 @@ public class InstituteService {
         return instituteMapper.toInstituteDetailsDTO(institute);
     }
 
+    public Long countAll(){
+        return repository.count();
+    }
+
     public InstituteDetailsDTO create(InstituteUpdateDTO instituteUpdateDTO) {
         if (instituteUpdateDTO == null) throw new RequiredObjectIsNullException();
 

@@ -40,6 +40,10 @@ public class ResearcherService {
         return researcherMapper.toResearcherDetailsDTO(researcher);
     }
 
+    public Long countAll(){
+        return repository.count();
+    }
+
     public ResearcherUpdateDTO findResearcherByCurriculumId(Long curriculumId) {
 
         ResearcherUpdateDTO researcherUpdateDTO = new ResearcherUpdateDTO();

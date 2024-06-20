@@ -31,6 +31,11 @@ public class researcherController {
         return service.findById(id);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAll(){
+        return ResponseEntity.ok(service.countAll());
+    }
+
     @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<ResearcherDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false,
             defaultValue = "0") Integer page,
