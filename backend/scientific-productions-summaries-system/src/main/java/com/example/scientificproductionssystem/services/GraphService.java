@@ -113,27 +113,34 @@ public class GraphService {
         return graph;
     }
 
-    public Graph<Researcher, DefaultWeightedEdge> buildResearchersGraph(List<Researcher> researchers, Optional<DesiredWorkType> workType){
-
+    public Graph<Researcher, DefaultWeightedEdge> buildResearchersGraph(List<Researcher> researchers, Optional<DesiredWorkType> workType) {
         Graph<Researcher, DefaultWeightedEdge> graph = new DefaultUndirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
         for (Researcher researcher : researchers) {
             graph.addVertex(researcher);
         }
 
-        for (Researcher researcher : researchers) {
+        int numResearchers = researchers.size();
+
+        for (int i = 0; i < numResearchers; i++) {
+            Researcher researcher = researchers.get(i);
+
             if (researcher != null && researcher.getWorks() != null) {
                 for (Work work : researcher.getWorks()) {
-
-                    if(workType.isPresent()){
-                        if(workType.get() == DesiredWorkType.ARTICLE && work.getClass() != Article.class) continue;
-                        if(workType.get() == DesiredWorkType.BOOK && work.getClass() != Book.class) continue;
+                    if (workType.isPresent()) {
+                        if (workType.get() == DesiredWorkType.ARTICLE && work.getClass() != Article.class) continue;
+                        if (workType.get() == DesiredWorkType.BOOK && work.getClass() != Book.class) continue;
                     }
 
                     for (QuoteName quoteName : work.getQuoteNames()) {
-                        Researcher connectedResearcher = findResearchersByQuoteName(quoteName.getName(), researchers.stream()
-                                .filter(r -> r != null && !r.equals(researcher))
-                                .collect(Collectors.toList()), work, researcher);
+                        List<Researcher> remainingResearchers = researchers.subList(i + 1, numResearchers);
+                        Researcher connectedResearcher = findResearchersByQuoteName(
+                                quoteName.getName(),
+                                remainingResearchers.stream().filter(r -> r != null).collect(Collectors.toList()),
+                                work,
+                                researcher
+                        );
+
                         if (graph.containsVertex(connectedResearcher)) {
                             DefaultWeightedEdge edge = graph.getEdge(researcher, connectedResearcher);
                             if (edge == null) {
@@ -158,8 +165,8 @@ public class GraphService {
         for (Researcher researcher : researchers) {
             String researcherAvailableQuoteNames = researcher.getAvailableQuoteNames();
             if (researcherAvailableQuoteNames != null) {
-                if (researcherAvailableQuoteNames.contains(quoteName)) {
-                    logger.info("O nome de citação: " + quoteName + " instituto: " + researcher.getInstitute().getName() + " retornou o seguinte pesquisador: " + researcher.getName() + " ("+ researcher.getId() +") " + " || work: " + work.getId() + "instituto: " + comparedResearcher.getInstitute().getName() + " pesquisador comparado: " + comparedResearcher.getName()+ " ("+ comparedResearcher.getId() +") ");
+                if (researcherAvailableQuoteNames.toLowerCase().contains(quoteName.toLowerCase())) {
+                    logger.info("O nome de citação: " + quoteName + " instituto: " + researcher.getInstitute().getName() + " retornou o seguinte pesquisador: " + researcher.getName() + " ("+ researcher.getId() +") " + " || work: " + work.getId() + " "+ work.getTitle() + work.getYear() +  "instituto: " + comparedResearcher.getInstitute().getName() + " pesquisador comparado: " + comparedResearcher.getName()+ " ("+ comparedResearcher.getId() +") ");
                     return researcher;
                 }
             }
