@@ -56,6 +56,11 @@ public class InstituteController {
         return service.findById(id);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAll(){
+        return ResponseEntity.ok(service.countAll());
+    }
+
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public InstituteDetailsDTO create(@RequestBody InstituteUpdateDTO instituteUpdateDTO){
         return service.create(instituteUpdateDTO);
