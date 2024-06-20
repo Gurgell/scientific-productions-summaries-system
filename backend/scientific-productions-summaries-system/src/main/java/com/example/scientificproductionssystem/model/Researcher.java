@@ -113,6 +113,6 @@ public class Researcher implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, email, institute, works, availableQuoteNames);
+        return Objects.hash(id, name, email);
     }
 }

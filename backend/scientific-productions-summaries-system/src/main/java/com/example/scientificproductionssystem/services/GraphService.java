@@ -73,23 +73,25 @@ public class GraphService {
             graph.addVertex(institute);
         }
 
+        Set<Researcher> processedResearchers = new HashSet<>();
+
         for (Institute institute : institutes) {
             for (Researcher researcher : institute.getResearchers()) {
                 if (researcher != null && researcher.getWorks() != null) {
                     for (Work work : researcher.getWorks()) {
-
-                        if(workType.isPresent()){
-                            if(workType.get() == DesiredWorkType.ARTICLE && work.getClass() != Article.class) continue;
-                            if(workType.get() == DesiredWorkType.BOOK && work.getClass() != Book.class) continue;
+                        if (workType.isPresent()) {
+                            if (workType.get() == DesiredWorkType.ARTICLE && work.getClass() != Article.class) continue;
+                            if (workType.get() == DesiredWorkType.BOOK && work.getClass() != Book.class) continue;
                         }
 
                         for (QuoteName quoteName : work.getQuoteNames()) {
-
                             List<Researcher> connectedResearchers = researchers.stream()
+                                    .filter(r -> !processedResearchers.contains(r)) // Excluir pesquisadores já processados
                                     .filter(r -> !r.getInstitute().equals(institute)) // Excluir o próprio instituto
                                     .filter(r -> r.getAvailableQuoteNames() != null && r.getAvailableQuoteNames().contains(quoteName.getName()))
-                                    .toList();
-                            connectedResearchers.forEach(cr -> logger.info("Instituto atual: " + institute.getName() + "Pesquisador atual: " + researcher.getName() + " | Nome do pesquisador: " + cr.getName() + " Instituto achado: " + cr.getInstitute().getName()));
+                                    .collect(Collectors.toList());
+
+                            connectedResearchers.forEach(cr -> logger.info("Instituto atual: " + institute.getName() + " Pesquisador atual: " + researcher.getName() + " | Nome do pesquisador: " + cr.getName() + " Instituto achado: " + cr.getInstitute().getName()));
 
                             for (Researcher connectedResearcher : connectedResearchers) {
                                 Institute connectedInstitute = connectedResearcher.getInstitute();
@@ -107,6 +109,7 @@ public class GraphService {
                         }
                     }
                 }
+                processedResearchers.add(researcher); // Adicionar pesquisador atual ao conjunto de processados
             }
         }
 
@@ -124,7 +127,6 @@ public class GraphService {
 
         for (int i = 0; i < numResearchers; i++) {
             Researcher researcher = researchers.get(i);
-
             if (researcher != null && researcher.getWorks() != null) {
                 for (Work work : researcher.getWorks()) {
                     if (workType.isPresent()) {
