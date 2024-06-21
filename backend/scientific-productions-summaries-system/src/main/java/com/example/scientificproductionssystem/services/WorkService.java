@@ -16,6 +16,7 @@ import org.springframework.data.domain.*;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 @Service
@@ -42,6 +43,19 @@ public class WorkService {
         Work work = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("No records found for this ID!"));
 
         return workMapper.toWorkDetailsDTO(work);
+    }
+
+    public Long countAll(Optional<String> type){
+
+        if(type.isPresent()) {
+            switch(type.get()){
+                case "book": return bookRepository.count();
+                case "article": return articleRepository.count();
+                default: break;
+            }
+        }
+
+        return repository.count();
     }
 
     public List<WorkDetailsDTO> findAll() {

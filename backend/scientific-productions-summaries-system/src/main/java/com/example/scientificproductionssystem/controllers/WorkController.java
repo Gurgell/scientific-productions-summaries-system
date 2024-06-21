@@ -32,6 +32,11 @@ public class WorkController {
         return service.findById(id);
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Long> countAll(@RequestParam(name = "type", required = false) Optional<String> type){
+        return ResponseEntity.ok(service.countAll(type));
+    }
+
 //    @GetMapping(value="/search", produces = MediaType.APPLICATION_JSON_VALUE)
 //    public ResponseEntity<Page<WorkDetailsDTO>> findWithParams(@RequestParam(name = "page", required = false, defaultValue = "0") Integer page,
 //                                                                     @RequestParam(name = "limit", required = false, defaultValue = "10") Integer limit,
